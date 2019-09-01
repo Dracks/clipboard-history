@@ -4,7 +4,7 @@
   "main": "dist/main/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npm build:core && npm build:ui",
+    "build": "npm run build:core && npm run build:ui",
     "build:core": "tsc -p config/tsconfig.main.json",
     "build:ui": "webpack --config config/webpack.prod.js",
     "dev": "concurrently --handle-input \"wait-on dist/main/index.js && nodemon\" \"tsc -w -p config/tsconfig.main.json\" \"webpack --config config/webpack.dev.js\"",
@@ -13,7 +13,8 @@
     "test": "jest --config config/jest.json",
     "test:watch": "jest --config config/jest.json --watch",
     "test:cov": "jest --config config/jest.json --coverage",
-    "package": "npm build && npm package:mac && npm package:windows && npm package:linux",
+    "test:travis-cov": "jest --config config/jest.travis.json | coveralls",
+    "package": "npm run build && npm run package:mac && npm run package:windows && npm run package:linux",
     "package:mac": "electron-packager . my-clipboard-manager --overwrite --platform=darwin --arch=x64 --prune=true --out=build --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.icns\" --asar",
     "package:windows": "electron-packager . my-clipboard-manager --overwrite --platform=win32 --arch=ia32 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.ico\" --asar",
     "package:linux": "electron-packager . my-clipboard-manager --overwrite --platform=linux --arch=x64 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.ico\" --asar"
@@ -31,6 +32,7 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "concurrently": "^4.1.2",
+    "coveralls": "^3.0.6",
     "electron": "^6.0.3",
     "electron-packager": "^14.0.4",
     "html-webpack-plugin": "^3.2.0",
