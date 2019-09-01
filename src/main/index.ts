@@ -1,5 +1,5 @@
 
-import { app, clipboard, dialog, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain } from 'electron';
 import { EventEmitter } from 'events';
 import * as NodeNotifier from 'node-notifier';
 import { Config } from '../common/config';
@@ -31,7 +31,7 @@ app.on('ready', () => {
     const bus : any = app; new EventEmitter()
 
     const configDb = new DataBase<Config>('config.json', app, initialConfig)
-    const configService = new ConfigService(bus, configDb, new WindowManager(ipcMain))
+    const configService = new ConfigService(bus, configDb, new WindowManager(ipcMain, BrowserWindow))
 
     new NotifierUI(bus, configService, {
         node: new NodeNotificationSystem(NodeNotifier),
