@@ -1,11 +1,12 @@
-import { BrowserWindow, IpcMain } from "electron";
+import { BrowserWindow, BrowserWindowConstructorOptions, IpcMain } from "electron";
 import { Observable, Subscriber } from 'rxjs';
 import { EventsName, PageData, PageDataSend, WindowPage } from "../../common/types";
 
 
 class WindowManager{
     private pageInstances: {[key in WindowPage]?:Subscriber<PageData[key]>} = {}
-    constructor(private ipc: IpcMain){
+
+    constructor(ipc: IpcMain, private winFactory: {new(options?: BrowserWindowConstructorOptions):BrowserWindow}){
         ipc.on(EventsName.Log, (events, messages)=>{
             console.log(...messages)
         });
@@ -37,7 +38,8 @@ class WindowManager{
 
 
     create<T extends WindowPage>(page: T,data: PageData[T]){
-        const window = new BrowserWindow({
+        const WinFact = this.winFactory
+        const window = new WinFact({
             width: 800,
             height: 600,
             show: false,
@@ -55,9 +57,6 @@ class WindowManager{
             window.webContents.send(EventsName.Load, {
                 page,
                 data
-            })
-            window.webContents.on(EventsName.Save as any, ()=>{
-                console.log("Save!")
             })
             window.show()
         })

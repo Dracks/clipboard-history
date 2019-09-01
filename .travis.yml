@@ -13,7 +13,8 @@ install:
   - npm install
 
 before_script:
-  - npm run test:travis-cov
+  - npm run test:travis-cov > ./coverall.txt
+  - cat ./coverall.txt | ./node_modules/.bin/coveralls
 
 script:
   - npm run build

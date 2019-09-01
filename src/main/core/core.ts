@@ -50,7 +50,6 @@ export default class Core{
 
     private checkCurrent(context: ChangeContext = ChangeContext.new){
         const current = this.clipboard.readText()
-
         if (!this.selected || this.selected.value !== current){
             if (current){
                 this.textChanged(current, context)
@@ -96,5 +95,9 @@ export default class Core{
 
     startMonitoringClipboard(){
         this.watchId=setInterval(this.checkCurrent.bind(this), 500)
+    }
+
+    stopMonitoringClipboard(){
+        clearInterval(this.watchId)
     }
 }

@@ -64,6 +64,12 @@ describe('core', ()=>{
         expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {index: 4, value:'4'}, bigHistory, contextMock)
     })
 
+    it('When Selecting out of the clipboardHistory, do nothing', ()=>{
+        getBusCallback(ON_SELECT)(bigHistory.length)
+
+        expect(busMock.emit).toBeCalledTimes(1)
+    })
+
     it('Clear history requested, it will clear completly', ()=>{
         const onClearCallback = getBusCallback(ON_CLEAR)
         onClearCallback(contextMock)
@@ -92,5 +98,65 @@ describe('core', ()=>{
 
         expect(clipboardMock.writeText).toBeCalledWith('0')
         expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {index: 0, value:'0'}, bigHistory, contextMock)
+    })
+
+    describe('Changing the clipboard', ()=>{
+        let setIntervalSpy : jest.SpyInstance
+
+        beforeEach(()=>{
+            setIntervalSpy = jest.spyOn(global, 'setInterval').mockReturnValue("ping" as any)
+        })
+
+        afterEach(()=>{
+            setIntervalSpy.mockRestore()
+        })
+
+        it('Checking the register and remove', ()=>{
+            const clearIntervalSpy = jest.spyOn(global, 'clearInterval').mockReturnValueOnce(null)
+
+            subject.startMonitoringClipboard()
+            expect(setIntervalSpy).toBeCalledTimes(1)
+            expect(setIntervalSpy).toBeCalledWith(expect.any(Function), 500)
+
+            subject.stopMonitoringClipboard()
+            expect(clearIntervalSpy).toBeCalledWith("ping")
+            clearIntervalSpy.mockRestore()
+        })
+
+        it('When the value of the clipboard change, we add a new on', ()=>{
+            subject.startMonitoringClipboard()
+            const checkClipboard = setIntervalSpy.mock.calls[0][0] as any
+
+            const newValue = "New value selected"
+            clipboardMock.readText = jest.fn().mockReturnValueOnce(newValue)
+            checkClipboard()
+
+            expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {
+                index: 0,
+                value: newValue
+            }, expect.anything(), expect.anything())
+        })
+
+        it('When the value of the clipboard change to null, we only set as null', ()=>{
+            subject.startMonitoringClipboard()
+            const checkClipboard = setIntervalSpy.mock.calls[0][0] as any
+
+            clipboardMock.readText = jest.fn().mockReturnValueOnce(null)
+            checkClipboard()
+
+            expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {
+                index: -1,
+                value: ""
+            }, expect.anything(), expect.anything())
+        })
+
+        it('When selected the same, we do nothing', ()=>{
+            subject.startMonitoringClipboard()
+            const checkClipboard = setIntervalSpy.mock.calls[0][0] as any
+
+            checkClipboard()
+
+            expect(busMock.emit).toBeCalledTimes(1)
+        })
     })
 })
