@@ -1,0 +1,52 @@
+
+import { app, clipboard, dialog, globalShortcut, ipcMain } from 'electron';
+import { EventEmitter } from 'events';
+import * as NodeNotifier from 'node-notifier';
+import { Config } from '../common/config';
+import ConfigService, { initialConfig } from './config/config.service';
+import Core from './core/core';
+import DataBase from './core/db';
+import { ClipboardValue } from './core/types';
+import { name as title } from './package';
+import { ElectronNotificationSystem, NodeNotificationSystem } from './ui/notifications';
+import NotifierUI from './ui/notifier';
+import ClipboardShortcuts from './ui/shortcuts';
+import ClipboardHistoryTray from './ui/tray';
+import WindowManager from './window/window.manager';
+
+
+app.on('second-instance', () => {
+    dialog.showMessageBox({
+        type: 'info',
+        title,
+        message: 'An instance of ' + title + ' already open'
+    })
+})
+
+app.on('window-all-closed', (events: Event)=>{
+    events.preventDefault()
+})
+
+app.on('ready', () => {
+    const bus : any = app; new EventEmitter()
+
+    const configDb = new DataBase<Config>('config.json', app, initialConfig)
+    const configService = new ConfigService(bus, configDb, new WindowManager(ipcMain))
+
+    new NotifierUI(bus, configService, {
+        node: new NodeNotificationSystem(NodeNotifier),
+        electron: new ElectronNotificationSystem()
+    })
+
+    const tray = new ClipboardHistoryTray(bus, app);
+    tray.registerOpen()
+
+    const shortcuts = new ClipboardShortcuts(bus, globalShortcut);
+    shortcuts.registerShortcuts()
+
+    const db = new DataBase<Array<ClipboardValue>>('clipboard.json', app, [])
+
+    const core = new Core(bus, configService, clipboard, db)
+    core.startMonitoringClipboard()
+    console.log("We are ready")
+})
