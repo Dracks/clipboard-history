@@ -1,27 +1,16 @@
 import { BrowserWindow, IpcMain } from "electron";
 import createMockInstance from "jest-create-mock-instance";
 import { Observable, Subscriber } from "rxjs";
-import { EventsName } from "../../common/types";
+import { EventsName, NodePlatformToEnum } from "../../common/types";
 import { getCallback, GetRegisteredCallbackFn } from "../core/utils.test";
 import WindowManager from "./window.manager";
-//console.log(BrowserWindow);
-/*
-class BrowserWindowMock<T extends {}> {
-    static constMock: jest.Mock
-    static mocks: jest.Mocked<any>
-
-    constructor(...args){
-        BrowserWindowMock.constMock(...args);
-    }
-}
-*/
 
 describe('Window manager', ()=>{
     let subject: WindowManager;
     let ipcMock: jest.Mocked<IpcMain>
     let bwConstructor: jest.Mock
     let bwMock: jest.Mocked<BrowserWindow>
-    let getWinOnce: GetRegisteredCallbackFn
+    let getWebcontentOn: GetRegisteredCallbackFn
     let getWinOn: GetRegisteredCallbackFn
     let getIpcOn: GetRegisteredCallbackFn
 
@@ -29,14 +18,16 @@ describe('Window manager', ()=>{
         ipcMock = {
             on: jest.fn()
         } as any;
+        const webContentsMock = {
+            on: jest.fn(),
+            send: jest.fn()
+        }
         bwMock ={
             loadFile: jest.fn(),
             setTitle: jest.fn(),
-            once: jest.fn(),
+            // once: jest.fn(),
             on: jest.fn(),
-            webContents: {
-                send: jest.fn()
-            },
+            webContents: webContentsMock,
             show: jest.fn()
         } as any;
         bwConstructor = jest.fn()
@@ -46,7 +37,7 @@ describe('Window manager', ()=>{
         temp.prototype = bwMock
 
         subject = new WindowManager(ipcMock, temp as any)
-        getWinOnce = getCallback(bwMock.once)
+        getWebcontentOn = getCallback(webContentsMock.on)
         getWinOn = getCallback(bwMock.on)
         getIpcOn = getCallback(ipcMock.on)
 
@@ -65,12 +56,16 @@ describe('Window manager', ()=>{
         expect(bwMock.loadFile).toBeCalledWith('dist/ui/index.html')
         expect(bwMock.setTitle).toBeCalledWith('Debug')
 
-
-        getWinOnce('ready-to-show')()
+        getWebcontentOn('did-finish-load')()
         expect(bwMock.webContents.send).toBeCalledTimes(1)
         expect(bwMock.webContents.send).toBeCalledWith(EventsName.Load, {
-            page: 'Debug',
-            data: 'data to debug'
+            context: {
+                platform: NodePlatformToEnum[process.platform]
+            },
+            page: {
+                name: 'Debug',
+                data: 'data to debug'
+            }
         })
         expect(bwMock.show).toBeCalledTimes(1)
     })
@@ -94,7 +89,7 @@ describe('Window manager', ()=>{
         })
 
         it('Create Single Window', ()=>{
-            subject.createSingleInstance('Debug', 'Other data');
+            subject.createSingleInstance('Debug', 'Other data')
             expect(observerCreateMock).toBeCalledTimes(1)
             observerCreateMock.mock.calls[0][0](subscriberMock)
 
@@ -118,7 +113,7 @@ describe('Window manager', ()=>{
             expect(observerCreateMock).toBeCalledTimes(1)
             observerCreateMock.mock.calls[0][0](subscriberMock)
 
-            getIpcOn(EventsName.Save)({}, {page: 'Debug', data: 'Some data'})
+            getIpcOn(EventsName.Save)({}, {name: 'Debug', data: 'Some data'})
             expect(subscriberMock.next).toBeCalledTimes(1)
             expect(subscriberMock.next).toBeCalledWith('Some data')
         })

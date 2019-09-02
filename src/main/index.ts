@@ -31,7 +31,8 @@ app.on('ready', () => {
     const bus : ClipboardEventEmitter= new EventEmitter()
 
     const configDb = new DataBase<Config>('config.json', app, initialConfig)
-    const configService = new ConfigService(bus, configDb, new WindowManager(ipcMain, BrowserWindow))
+    const windowManager = new WindowManager(ipcMain, BrowserWindow)
+    const configService = new ConfigService(bus, configDb, windowManager)
 
     new NotifierUI(bus, configService, {
         node: new NodeNotificationSystem(NodeNotifier),
@@ -49,4 +50,6 @@ app.on('ready', () => {
     const core = new Core(bus, configService, clipboard, db)
     core.startMonitoringClipboard()
     console.log("We are ready")
+
+    //windowManager.create('config', initialConfig)
 })

@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Config } from "../../common/config";
 import { ChangeContext } from '../../common/types';
-import { getCheckboxProps, getInputProps, mergeObjects } from '../utils';
+import { ThemeContext } from '../theme/context';
+import { getGeneric, mergeObjects } from '../utils/utils';
 import { WindowPageProps } from './interface';
 
 const EXPLANATIONS : {
@@ -14,25 +15,30 @@ const EXPLANATIONS : {
 }
 
 const Configuration = ({data, save}: WindowPageProps<Config>)=>{
-    //const [config, setConfig] = useState(data)
     const config = data
     const setConfig = save
     const update = useCallback((newData: Partial<Config>)=>{
         setConfig(mergeObjects(config, newData))
     }, [config])
-    console.log(config)
-    return (<div>
-        <h2>History length</h2>
-        <input type="number" {...getInputProps(["historyLength"], config, update)}/>
-        <h2>Notifications</h2>
-        {Object.values(ChangeContext).map((key:ChangeContext)=>(
-            <div key={key}>
-
-                <input type="checkbox" {...getCheckboxProps(["notifications", key], config, update)} />
-                <span>{EXPLANATIONS[key]}</span>
-            </div>
-        ))}
-    </div>)
+    const {Section, Checkbox, TextField, Page, Spacer} = useContext(ThemeContext)
+    return <Page >
+            <Section title="General" >
+                <h2>History length</h2>
+                <TextField.Number {...getGeneric(["historyLength"], config, update)}/>
+            </Section>
+            <Spacer/>
+            <Section title="notifications">
+                {Object.values(ChangeContext).map((key:ChangeContext)=>(
+                    <div key={key}>
+                        <Checkbox
+                            id={key}
+                            text={EXPLANATIONS[key]}
+                            {...getGeneric(["notifications", key], config, update)}
+                            />
+                    </div>
+                ))}
+            </Section>
+        </Page>
 }
 
 export default Configuration

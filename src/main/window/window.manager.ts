@@ -1,10 +1,11 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, IpcMain } from "electron";
 import { Observable, Subscriber } from 'rxjs';
-import { EventsName, PageData, PageDataSend, WindowPage } from "../../common/types";
+import { ContextData, EventsName, LoadPage, NodePlatformToEnum, PageData, PageDataSend, WindowPage } from "../../common/types";
 
 
 class WindowManager{
     private pageInstances: {[key in WindowPage]?:Subscriber<PageData[key]>} = {}
+    private context: ContextData
 
     constructor(ipc: IpcMain, private winFactory: {new(options?: BrowserWindowConstructorOptions):BrowserWindow}){
         ipc.on(EventsName.Log, (events, messages)=>{
@@ -13,9 +14,15 @@ class WindowManager{
         ipc.on(EventsName.Error, (events, messages)=>{
             console.error(...messages)
         });
-        ipc.on(EventsName.Save, (_, {page, data}: PageDataSend)=>{
-            this.pageInstances[page].next(data as any)
+        ipc.on(EventsName.Save, (_, {name, data}: PageDataSend)=>{
+            let subscriber = this.pageInstances[name]
+            if (subscriber){
+                subscriber.next(data as any)
+            }
         })
+        this.context = {
+            platform: NodePlatformToEnum[process.platform]
+        }
     }
 
     createSingleInstance<T extends WindowPage>(page: T, data: PageData[T]):Observable<PageData[T]>{
@@ -53,15 +60,19 @@ class WindowManager{
         // and load the index.html of the app.
         window.loadFile('dist/ui/index.html')
         window.setTitle(page)
-        window.once("ready-to-show", ()=>{
-            window.webContents.send(EventsName.Load, {
-                page,
-                data
-            })
+        window.webContents.on('did-finish-load', ()=>{
+                window.webContents.send(EventsName.Load, {
+                    context: this.context,
+                    page: {
+                        name: page,
+                        data
+                    }
+                } as LoadPage)
             window.show()
         })
         return window
     }
 }
+
 
 export default WindowManager
