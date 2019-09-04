@@ -1,8 +1,7 @@
-import { EventEmitter, Menu, MenuItemConstructorOptions, Tray } from "electron";
+import { Menu, MenuItemConstructorOptions, Tray } from "electron";
 import { ChangeContext } from "../../common/types";
-import { ClipboardValue, SelectedClipboard } from "../core/types";
-import { EDIT_CONFIG, ON_CLEAR, ON_REMOVE_CURRENT_ITEM, ON_SELECT, TEXT_CHANGED } from '../events';
 import { icon } from "../package";
+import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectedClipboard } from "../types";
 import { REMOVE_ITEM_SHORTCUT } from "./shortcuts";
 
 
@@ -11,7 +10,7 @@ export default class ClipboardHistoryTray{
     private template = []
     private contextMenu: Electron.Menu
 
-    constructor(private bus: EventEmitter, app: Electron.App){
+    constructor(private bus: ClipboardEventEmitter, app: Electron.App){
         this.tray = new Tray(icon)
         this.tray.setToolTip('Click to show your clipboard history')
 
@@ -19,7 +18,7 @@ export default class ClipboardHistoryTray{
         this.template.push({
             label: 'settings',
             click: ()=>{
-                bus.emit(EDIT_CONFIG)
+                bus.emit(ClipboardEventEnum.EditConfig)
             }
         })
 
@@ -27,13 +26,13 @@ export default class ClipboardHistoryTray{
         this.template.push({
             label: 'Clear history',
             click: ()=>{
-                bus.emit(ON_CLEAR, ChangeContext.manual)
+                bus.emit(ClipboardEventEnum.Clear, ChangeContext.manual)
             }
         })
         this.template.push({
             label: 'Remove current item',
             click: ()=>{
-                bus.emit(ON_REMOVE_CURRENT_ITEM, ChangeContext.manual)
+                bus.emit(ClipboardEventEnum.RemoveCurrentItem, ChangeContext.manual)
             },
             accelerator: REMOVE_ITEM_SHORTCUT
         })
@@ -44,7 +43,7 @@ export default class ClipboardHistoryTray{
             }
         })
         this.reloadContextMenu([])
-        this.bus.on(TEXT_CHANGED, this.onChanges.bind(this))
+        this.bus.on(ClipboardEventEnum.TextChanged, this.onChanges.bind(this))
     }
 
     registerOpen(){
@@ -68,7 +67,7 @@ export default class ClipboardHistoryTray{
             checked: selected.index === index,
             type: 'checkbox',
             click: ()=>{
-                this.bus.emit(ON_SELECT, index, ChangeContext.manual)
+                this.bus.emit(ClipboardEventEnum.Select, index, ChangeContext.manual)
             }
         })))
     }

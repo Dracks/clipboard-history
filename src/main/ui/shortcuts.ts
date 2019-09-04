@@ -1,7 +1,5 @@
-import { EventEmitter } from 'electron';
 import { ChangeContext } from '../../common/types';
-import { SelectedClipboard } from '../core/types';
-import { ON_REMOVE_CURRENT_ITEM, ON_SELECT, TEXT_CHANGED } from '../events';
+import { ClipboardEventEmitter, ClipboardEventEnum, SelectedClipboard } from '../types';
 
 export const NEXT_SHORTCUT = 'CommandOrControl+F12'
 export const PREV_SHORTCUT = 'CommandOrControl+F11'
@@ -11,8 +9,8 @@ export class ClipboardShortcuts {
     private currentIndex: number;
     private historyLength: number;
 
-    constructor(private bus: EventEmitter, private globalShortcuts: Electron.GlobalShortcut){
-        this.bus.on(TEXT_CHANGED, this.on_selected_change.bind(this))
+    constructor(private bus: ClipboardEventEmitter, private globalShortcuts: Electron.GlobalShortcut){
+        this.bus.on(ClipboardEventEnum.TextChanged, this.on_selected_change.bind(this))
     }
 
     private on_selected_change(selected: SelectedClipboard, history: Array<any>){
@@ -25,7 +23,7 @@ export class ClipboardShortcuts {
         if (currentIndex >= this.historyLength){
             currentIndex = 0
         }
-        this.bus.emit(ON_SELECT, currentIndex, ChangeContext.shortcut)
+        this.bus.emit(ClipboardEventEnum.Select, currentIndex, ChangeContext.shortcut)
     }
 
     private previous(){
@@ -33,11 +31,11 @@ export class ClipboardShortcuts {
         if (currentIndex<=0){
             currentIndex = this.historyLength
         }
-        this.bus.emit(ON_SELECT, currentIndex-1, ChangeContext.shortcut)
+        this.bus.emit(ClipboardEventEnum.Select, currentIndex-1, ChangeContext.shortcut)
     }
 
     private removeCurrent(){
-        this.bus.emit(ON_REMOVE_CURRENT_ITEM, ChangeContext.shortcut)
+        this.bus.emit(ClipboardEventEnum.RemoveCurrentItem, ChangeContext.shortcut)
     }
 
     registerShortcuts(){

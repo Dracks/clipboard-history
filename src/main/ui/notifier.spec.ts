@@ -2,10 +2,12 @@ import { EventEmitter } from "events";
 import createMockInstance from "jest-create-mock-instance";
 import ConfigService from "../config/config.service";
 import { getCallback, GetRegisteredCallbackFn, setProp } from "../core/utils.test";
-import { TEXT_CHANGED } from "../events";
+import { ClipboardEventEnum } from "../types";
 import { ElectronNotificationSystem, NodeNotificationSystem } from "./notifications";
 import NotificationSystem from './notifications/type';
 import NotifierUI from './notifier';
+
+const TEXT_CHANGED = ClipboardEventEnum.TextChanged
 
 describe('Notifier', ()=>{
     let subject : NotifierUI

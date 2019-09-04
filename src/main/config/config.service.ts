@@ -1,8 +1,7 @@
-import { EventEmitter } from "events";
 import { Config, NotificationSystem } from "../../common/config";
 import { ChangeContext } from "../../common/types";
 import DataBase from "../core/db";
-import { CONFIG_CHANGE, EDIT_CONFIG } from "../events";
+import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
 import WindowManager from '../window/window.manager';
 
 export const initialConfig : Config = {
@@ -34,9 +33,9 @@ class ConfigService{
             .filter(key=>configNotifications[key])
     }
 
-    constructor(private bus: EventEmitter, private db: DataBase<Config>, private wm: WindowManager){
+    constructor(private bus: ClipboardEventEmitter, private db: DataBase<Config>, private wm: WindowManager){
         this.config = this.db.read()
-        this.bus.on(EDIT_CONFIG, this.openEdit.bind(this))
+        this.bus.on(ClipboardEventEnum.EditConfig, this.openEdit.bind(this))
     }
 
     openEdit(){
@@ -49,7 +48,7 @@ class ConfigService{
 
     save(){
         this.db.write(this.config)
-        this.bus.emit(CONFIG_CHANGE)
+        this.bus.emit(ClipboardEventEnum.ConfigChanged)
     }
 }
 

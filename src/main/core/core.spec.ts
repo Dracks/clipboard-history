@@ -3,10 +3,15 @@ import { EventEmitter } from 'events';
 import createMockInstance from 'jest-create-mock-instance';
 import { ChangeContext } from '../../common/types';
 import ConfigService from '../config/config.service';
-import { ON_CLEAR, ON_REMOVE_CURRENT_ITEM, ON_SELECT, TEXT_CHANGED } from '../events';
+import { ClipboardEventEnum } from '../types';
 import Core from './core';
 import DataBase from './db';
 import { getCallback, GetRegisteredCallbackFn } from './utils.test';
+
+const ON_CLEAR = ClipboardEventEnum.Clear
+const ON_REMOVE_CURRENT_ITEM = ClipboardEventEnum.RemoveCurrentItem
+const ON_SELECT = ClipboardEventEnum.Select
+const TEXT_CHANGED = ClipboardEventEnum.TextChanged
 
 describe('core', ()=>{
     let subject: Core

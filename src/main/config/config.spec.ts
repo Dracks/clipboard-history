@@ -4,9 +4,12 @@ import { Observable, Subscriber } from 'rxjs';
 import { Config } from '../../common/config';
 import DataBase from '../core/db';
 import { getCallback, GetRegisteredCallbackFn } from '../core/utils.test';
-import { CONFIG_CHANGE, EDIT_CONFIG } from '../events';
+import { ClipboardEventEnum } from '../types';
 import WindowManager from '../window/window.manager';
 import ConfigService, { initialConfig } from './config.service';
+
+const EDIT_CONFIG = ClipboardEventEnum.EditConfig
+const CONFIG_CHANGE = ClipboardEventEnum.ConfigChanged
 
 describe('Config Service', ()=>{
     let subject: ConfigService

@@ -6,8 +6,8 @@ import { Config } from '../common/config';
 import ConfigService, { initialConfig } from './config/config.service';
 import Core from './core/core';
 import DataBase from './core/db';
-import { ClipboardValue } from './core/types';
 import { name as title } from './package';
+import { ClipboardEventEmitter, ClipboardValue } from './types';
 import { ElectronNotificationSystem, NodeNotificationSystem } from './ui/notifications';
 import NotifierUI from './ui/notifier';
 import ClipboardShortcuts from './ui/shortcuts';
@@ -28,7 +28,7 @@ app.on('window-all-closed', (events: Event)=>{
 })
 
 app.on('ready', () => {
-    const bus : any = app; new EventEmitter()
+    const bus : ClipboardEventEmitter= new EventEmitter()
 
     const configDb = new DataBase<Config>('config.json', app, initialConfig)
     const configService = new ConfigService(bus, configDb, new WindowManager(ipcMain, BrowserWindow))

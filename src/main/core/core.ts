@@ -1,20 +1,18 @@
-import { EventEmitter } from "events";
 import { ChangeContext } from "../../common/types";
 import ConfigService from "../config/config.service";
-import { ON_CLEAR, ON_REMOVE_CURRENT_ITEM, ON_SELECT, TEXT_CHANGED } from "../events";
+import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectedClipboard } from "../types";
 import DataBase from "./db";
-import { ClipboardValue, SelectedClipboard } from "./types";
 
 export default class Core{
     private clipboardHistory = new Array<ClipboardValue>()
     private selected?: SelectedClipboard
     private watchId: NodeJS.Timeout;
 
-    constructor(private bus: EventEmitter, private config: ConfigService, private clipboard: Electron.Clipboard, private db: DataBase<Array<ClipboardValue>>){
+    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private clipboard: Electron.Clipboard, private db: DataBase<Array<ClipboardValue>>){
         this.clipboardHistory = db.read()
-        this.bus.on(ON_SELECT, this.onSelect.bind(this))
-        this.bus.on(ON_CLEAR, this.clear.bind(this))
-        this.bus.on(ON_REMOVE_CURRENT_ITEM, this.removeCurrent.bind(this))
+        this.bus.on(ClipboardEventEnum.Select, this.onSelect.bind(this))
+        this.bus.on(ClipboardEventEnum.Clear, this.clear.bind(this))
+        this.bus.on(ClipboardEventEnum.RemoveCurrentItem, this.removeCurrent.bind(this))
         this.checkCurrent(ChangeContext.start)
     }
 
@@ -45,7 +43,7 @@ export default class Core{
 
     private setSelected(selected: SelectedClipboard, context: ChangeContext){
         this.selected = selected
-        this.bus.emit(TEXT_CHANGED, this.selected, this.clipboardHistory, context)
+        this.bus.emit(ClipboardEventEnum.TextChanged, this.selected, this.clipboardHistory, context)
     }
 
     private checkCurrent(context: ChangeContext = ChangeContext.new){

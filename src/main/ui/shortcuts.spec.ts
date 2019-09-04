@@ -1,10 +1,13 @@
 import { EventEmitter } from "events";
 import createMockInstance from "jest-create-mock-instance";
 import { ChangeContext } from "../../common/types";
-import { ClipboardValue, TextChangedCallback } from "../core/types";
 import { getCallback, GetRegisteredCallbackFn } from "../core/utils.test";
-import { ON_REMOVE_CURRENT_ITEM, ON_SELECT, TEXT_CHANGED } from "../events";
+import { ClipboardEventEnum, ClipboardValue, TextChangedCallback } from "../types";
 import ClipboardShortcuts, { NEXT_SHORTCUT, PREV_SHORTCUT, REMOVE_ITEM_SHORTCUT } from "./shortcuts";
+
+const ON_REMOVE_CURRENT_ITEM = ClipboardEventEnum.RemoveCurrentItem
+const ON_SELECT = ClipboardEventEnum.Select
+const TEXT_CHANGED = ClipboardEventEnum.TextChanged
 
 describe('Shortcuts', ()=>{
     let subject : ClipboardShortcuts
@@ -57,7 +60,7 @@ describe('Shortcuts', ()=>{
             selectedChange({
                 index:1,
                 value: "1"
-            }, history)
+            }, history, "" as any)
 
             nextFn()
 
@@ -69,7 +72,7 @@ describe('Shortcuts', ()=>{
             selectedChange({
                 index:history.length-1,
                 value: "1"
-            }, history)
+            }, history, "" as any)
 
             nextFn()
 
@@ -81,7 +84,7 @@ describe('Shortcuts', ()=>{
             selectedChange({
                 index:1,
                 value: "1"
-            }, history)
+            }, history, "" as any)
 
             prevFn()
 
@@ -93,7 +96,7 @@ describe('Shortcuts', ()=>{
             selectedChange({
                 index:0,
                 value: "1"
-            }, history)
+            }, history, "" as any)
 
             prevFn()
 
