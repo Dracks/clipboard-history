@@ -32,17 +32,7 @@ describe('utils', ()=>{
                 }
             })
         })
-        it('nothing in the first', ()=>{
-            const data1= {}
-            const data2= {
-                key1: "something",
-                key2: {
-                    subkey: "other"
-                }
-            }
-            const result = subject(data1, data2)
-            expect(result).toEqual(data2)
-        })
+
 
     })
 

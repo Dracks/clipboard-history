@@ -39,7 +39,7 @@ describe('Config Service', ()=>{
     })
 
     it('When edit, opens a window & save the data', ()=>{
-        let subscription: Subscriber<Config>
+        let subscription: Subscriber<Config> = null as any
         const obs = Observable.create((s: Subscriber<Config>)=>{
             subscription = s
         })
@@ -52,7 +52,7 @@ describe('Config Service', ()=>{
         const updateData = {
             historyLength: 5,
             notifications: {
-                type: null,
+                type: undefined,
                 manual: true,
                 shortcut:false,
                 new: true,

@@ -6,8 +6,8 @@ export const PREV_SHORTCUT = 'CommandOrControl+F11'
 export const REMOVE_ITEM_SHORTCUT = 'CommandOrControl+F9'
 
 export class ClipboardShortcuts {
-    private currentIndex: number;
-    private historyLength: number;
+    private currentIndex: number = -1;
+    private historyLength: number = 0;
 
     constructor(private bus: ClipboardEventEmitter, private globalShortcuts: Electron.GlobalShortcut){
         this.bus.on(ClipboardEventEnum.TextChanged, this.on_selected_change.bind(this))

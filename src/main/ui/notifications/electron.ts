@@ -4,7 +4,7 @@ import NotificationSystem from "./type";
 
 
 class ElectronNotificationSystem implements NotificationSystem {
-    private last: Notification
+    private last: Notification | null = null;
     constructor(){}
 
     notify(current: string) {

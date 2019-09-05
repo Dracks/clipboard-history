@@ -2,12 +2,13 @@
     "moduleFileExtensions": [
         "js",
         "json",
-        "ts"
+        "ts",
+        "tsx"
     ],
     "rootDir": "../src",
-    "testRegex": ".spec.ts$",
+    "testRegex": ".spec.tsx?$",
     "transform": {
-        "^.+\\.ts$": "ts-jest"
+        "^.+\\.tsx?$": "ts-jest"
     },
     "testEnvironment": "node",
     "collectCoverage": true,

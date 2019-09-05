@@ -29,21 +29,21 @@ export enum ClipboardEventEnum {
 
 export interface ClipboardEventEmitter extends EventEmitter{
     emit(ev: ClipboardEventEnum.Clear, c: ChangeContext):boolean
-    on(ev: ClipboardEventEnum.Clear, cb: ClearCallback)
+    on(ev: ClipboardEventEnum.Clear, cb: ClearCallback):this
 
     emit(ev: ClipboardEventEnum.ConfigChanged):boolean
-    on(ev: ClipboardEventEnum.ConfigChanged, cb: ConfigChanged)
+    on(ev: ClipboardEventEnum.ConfigChanged, cb: ConfigChanged):this
 
     emit(ev: ClipboardEventEnum.EditConfig):boolean
-    on(ev: ClipboardEventEnum.EditConfig, cb: EditConfig)
+    on(ev: ClipboardEventEnum.EditConfig, cb: EditConfig):this
 
     emit(ev: ClipboardEventEnum.TextChanged, s: SelectedClipboard, h: Array<ClipboardValue>, c: ChangeContext):boolean
-    on(ev: ClipboardEventEnum.TextChanged, cb:TextChangedCallback)
+    on(ev: ClipboardEventEnum.TextChanged, cb:TextChangedCallback):this
 
     emit(ev: ClipboardEventEnum.Select, i: number, c: ChangeContext):boolean
-    on(ev: ClipboardEventEnum.Select, cb: SelectCallback)
+    on(ev: ClipboardEventEnum.Select, cb: SelectCallback):this
 
     emit(ev: ClipboardEventEnum.RemoveCurrentItem, c: ChangeContext):boolean
-    on(ev: ClipboardEventEnum.RemoveCurrentItem, cb: RemoveCallback)
+    on(ev: ClipboardEventEnum.RemoveCurrentItem, cb: RemoveCallback):this
 
 }

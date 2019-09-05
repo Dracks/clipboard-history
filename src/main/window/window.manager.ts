@@ -20,21 +20,21 @@ class WindowManager{
                 subscriber.next(data as any)
             }
         })
+        console.log(NodePlatformToEnum)
         this.context = {
             platform: NodePlatformToEnum[process.platform]
         }
     }
 
-    createSingleInstance<T extends WindowPage>(page: T, data: PageData[T]):Observable<PageData[T]>{
+    createSingleInstance<T extends WindowPage>(page: T, data: PageData[T]):Observable<PageData[T]>|null{
         if (!this.pageInstances[page]){
             const window = this.create(page, data)
-            let observable = Observable.create((subs)=>{
+            let observable = Observable.create((subs: any)=>{
                 this.pageInstances[page] = subs
             })
             window.on('closed', ()=>{
-                console.log("Window clossed!")
-                this.pageInstances[page].complete()
-                this.pageInstances[page]=null;
+                (this.pageInstances[page] as any).complete()
+                this.pageInstances[page]=undefined;
             })
             return observable
         } else {

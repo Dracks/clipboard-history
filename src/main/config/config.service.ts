@@ -22,7 +22,7 @@ class ConfigService{
         return this.config.historyLength
     }
 
-    get typeNotifications(): NotificationSystem{
+    get typeNotifications(): NotificationSystem | undefined{
         return this.config.notifications.type
     }
 
@@ -30,7 +30,7 @@ class ConfigService{
         const configNotifications = this.config.notifications
         return Object
             .values(ChangeContext)
-            .filter(key=>configNotifications[key])
+            .filter((key:ChangeContext)=>configNotifications[key])
     }
 
     constructor(private bus: ClipboardEventEmitter, private db: DataBase<Config>, private wm: WindowManager){

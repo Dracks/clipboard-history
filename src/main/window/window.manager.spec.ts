@@ -31,7 +31,7 @@ describe('Window manager', ()=>{
             show: jest.fn()
         } as any;
         bwConstructor = jest.fn()
-        function temp(...args){
+        function temp(...args: any[]){
             bwConstructor(...args)
         }
         temp.prototype = bwMock

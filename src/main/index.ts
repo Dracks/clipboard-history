@@ -51,5 +51,5 @@ app.on('ready', () => {
     core.startMonitoringClipboard()
     console.log("We are ready")
 
-    //windowManager.create('config', initialConfig)
+    //new WindowManager(ipcMain, BrowserWindow).create('Debug', "Test!")
 })
