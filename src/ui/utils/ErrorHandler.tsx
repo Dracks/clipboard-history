@@ -27,7 +27,7 @@ class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
                 {error.stack}
             </pre>
             <pre>
-                {info.componentStack}
+                {info && info.componentStack}
             </pre>
         </div>;
       }

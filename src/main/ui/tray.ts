@@ -7,8 +7,8 @@ import { REMOVE_ITEM_SHORTCUT } from "./shortcuts";
 
 export default class ClipboardHistoryTray{
     private tray: Tray
-    private template = []
-    private contextMenu: Electron.Menu
+    private template : Array<MenuItemConstructorOptions>= []
+    private contextMenu?: Electron.Menu
 
     constructor(private bus: ClipboardEventEmitter, app: Electron.App){
         this.tray = new Tray(icon)

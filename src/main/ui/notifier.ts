@@ -1,7 +1,7 @@
 import { NotificationSystem } from '../../common/config';
 import { ChangeContext } from "../../common/types";
 import ConfigService from "../config/config.service";
-import { ClipboardEventEmitter, ClipboardEventEnum, SelectedClipboard } from "../types";
+import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectedClipboard } from "../types";
 import NotificationSystemType from "./notifications/type";
 
 export type NotifierDict = {
@@ -13,7 +13,7 @@ class NotifierUI {
         this.bus.on(ClipboardEventEnum.TextChanged, this.changed.bind(this))
     }
 
-    private changed(current: SelectedClipboard, _, context: ChangeContext){
+    private changed(current: SelectedClipboard, _:Array<ClipboardValue>, context: ChangeContext){
         const type = this.config.typeNotifications
         if (type){
             const enabledContext = this.config.selectedContextNotifications

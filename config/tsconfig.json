@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "rootDir": "../src/",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es6",
+        "strict": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "jsx": "react",
+        "paths": {
+          "*": ["node_modules/*"]
+        },
+        "types": [
+          "node",
+          "electron",
+          "jest"
+        ]
+    },
+}
