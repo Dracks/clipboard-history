@@ -1,4 +1,4 @@
-import { Config, NotificationSystem } from "../../common/config";
+import { Config, NotificationSystem, ShortcutsConfig } from "../../common/config";
 import { ChangeContext } from "../../common/types";
 import DataBase from "../core/db";
 import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
@@ -12,6 +12,11 @@ export const initialConfig : Config = {
         shortcut: true,
         manual: false,
         start: false
+    },
+    shortcuts: {
+        next: 'CommandOrControl+F12',
+        previous: 'CommandOrControl+F11',
+        removeCurrent: 'CommandOrControl+F9',
     }
 }
 
@@ -31,6 +36,10 @@ class ConfigService{
         return Object
             .values(ChangeContext)
             .filter((key:ChangeContext)=>configNotifications[key])
+    }
+
+    get shortcuts(): ShortcutsConfig{
+        return this.config.shortcuts
     }
 
     constructor(private bus: ClipboardEventEmitter, private db: DataBase<Config>, private wm: WindowManager){

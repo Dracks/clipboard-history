@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Observable } from 'rxjs';
 import { ContextData, LoadPage, PageDataSend, PlatformEnum } from '../common/types';
+import Context from './context';
 import Title from './title';
 import Content from './windows';
 
@@ -30,10 +31,10 @@ const Root = ({onSave,loadPageInfo}: RootProps) => {
     }, [])
 
     if (pageInfo){
-        return <div>
+        return <Context.Provider value={contextInfo}>
                     <Title name={pageInfo.name}/>
                     <Content data={pageInfo} setData={save}/>
-                </div>
+                </Context.Provider>
     }
     return <div >
         <Title name="Loading..."/>

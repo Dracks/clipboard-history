@@ -1,4 +1,6 @@
+import { ShortcutsConfig } from '../../common/config';
 import { ChangeContext } from '../../common/types';
+import ConfigService from '../config/config.service';
 import { ClipboardEventEmitter, ClipboardEventEnum, SelectedClipboard } from '../types';
 
 export const NEXT_SHORTCUT = 'CommandOrControl+F12'
@@ -8,12 +10,20 @@ export const REMOVE_ITEM_SHORTCUT = 'CommandOrControl+F9'
 export class ClipboardShortcuts {
     private currentIndex: number = -1;
     private historyLength: number = 0;
+    private isRegistered: boolean = false;
+    private shortcutsConfig: ShortcutsConfig
 
-    constructor(private bus: ClipboardEventEmitter, private globalShortcuts: Electron.GlobalShortcut){
-        this.bus.on(ClipboardEventEnum.TextChanged, this.on_selected_change.bind(this))
+    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private globalShortcuts: Electron.GlobalShortcut){
+        this.shortcutsConfig = config.shortcuts
+        this.bus.on(ClipboardEventEnum.TextChanged, this.onSelectedChange.bind(this))
+        this.bus.on(ClipboardEventEnum.ConfigChanged, this.onChangeConfig.bind(this))
+
+        this.next = this.next.bind(this)
+        this.previous = this.previous.bind(this)
+        this.removeCurrent = this.removeCurrent.bind(this)
     }
 
-    private on_selected_change(selected: SelectedClipboard, history: Array<any>){
+    private onSelectedChange(selected: SelectedClipboard, history: Array<any>){
         this.currentIndex = selected.index;
         this.historyLength = history.length
     }
@@ -38,10 +48,28 @@ export class ClipboardShortcuts {
         this.bus.emit(ClipboardEventEnum.RemoveCurrentItem, ChangeContext.shortcut)
     }
 
+    private onChangeConfig(){
+        if (this.isRegistered){
+            this.unregisterShortcuts()
+            this.shortcutsConfig = this.config.shortcuts
+            this.registerShortcuts()
+        } else {
+            this.shortcutsConfig = this.config.shortcuts
+        }
+    }
+
     registerShortcuts(){
-        this.globalShortcuts.register(NEXT_SHORTCUT, this.next.bind(this))
-        this.globalShortcuts.register(PREV_SHORTCUT, this.previous.bind(this))
-        this.globalShortcuts.register(REMOVE_ITEM_SHORTCUT, this.removeCurrent.bind(this))
+        this.globalShortcuts.register(this.shortcutsConfig.next, this.next)
+        this.globalShortcuts.register(this.shortcutsConfig.previous, this.previous)
+        this.globalShortcuts.register(this.shortcutsConfig.removeCurrent, this.removeCurrent)
+        this.isRegistered = true;
+    }
+
+    unregisterShortcuts(){
+        this.isRegistered = false
+        this.globalShortcuts.unregister(this.shortcutsConfig.next)
+        this.globalShortcuts.unregister(this.shortcutsConfig.previous)
+        this.globalShortcuts.unregister(this.shortcutsConfig.removeCurrent)
     }
 }
 

@@ -49,7 +49,7 @@ describe('Config Service', ()=>{
         expect(wmMock.createSingleInstance).toBeCalledTimes(1)
         expect(wmMock.createSingleInstance).toBeCalledWith("config", initialConfig)
 
-        const updateData = {
+        const updateData : Config = {
             historyLength: 5,
             notifications: {
                 type: undefined,
@@ -57,6 +57,11 @@ describe('Config Service', ()=>{
                 shortcut:false,
                 new: true,
                 start: true
+            },
+            shortcuts: {
+                next: "next",
+                previous: "prev",
+                removeCurrent: "remove"
             }
         }
 
@@ -67,6 +72,11 @@ describe('Config Service', ()=>{
         expect(dbMock.write).toBeCalledWith(updateData)
         expect(subject.maxHistory).toBe(5)
         expect(subject.selectedContextNotifications).toEqual(["new", "manual", "start"])
+        expect(subject.shortcuts).toEqual({
+            next: "next",
+            previous: "prev",
+            removeCurrent: "remove"
+        })
     })
 
 })

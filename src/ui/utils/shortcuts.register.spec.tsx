@@ -52,7 +52,7 @@ describe('shortcuts register', ()=>{
         fireEvent.keyDown(window, {key:"B"})
         fireEvent.keyDown(window, {key:'Alt', repeat: true})
 
-        expect(keysPressed).toEqual(["B", "A"])
+        expect(keysPressed).toEqual(["A", "B"])
         expect(onComplete).toBeCalledTimes(0)
     })
 })

@@ -44,7 +44,6 @@ class RegisterShortcuts extends React.Component<RegisterShortcutsProps,RegisterS
     onUp(e: KeyboardEvent){
         this.count--;
         if (this.count===0){
-            console.log("Release!")
             this.props.onAllReleased(this.state.keys)
         }
     }

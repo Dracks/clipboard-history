@@ -42,7 +42,7 @@ app.on('ready', () => {
     const tray = new ClipboardHistoryTray(bus, app);
     tray.registerOpen()
 
-    const shortcuts = new ClipboardShortcuts(bus, globalShortcut);
+    const shortcuts = new ClipboardShortcuts(bus, configService, globalShortcut);
     shortcuts.registerShortcuts()
 
     const db = new DataBase<Array<ClipboardValue>>('clipboard.json', app, [])
@@ -51,5 +51,5 @@ app.on('ready', () => {
     core.startMonitoringClipboard()
     console.log("We are ready")
 
-    //new WindowManager(ipcMain, BrowserWindow).create('Debug', "Test!")
+    // new WindowManager(ipcMain, BrowserWindow).create('Debug', "Test!")
 })

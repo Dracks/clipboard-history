@@ -20,7 +20,7 @@ class WindowManager{
                 subscriber.next(data as any)
             }
         })
-        console.log(NodePlatformToEnum)
+
         this.context = {
             platform: NodePlatformToEnum[process.platform]
         }
