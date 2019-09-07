@@ -24,6 +24,7 @@ describe('shortcuts register', ()=>{
         expect(keysPressed).toEqual([])
 
         fireEvent.keyDown(window, {key:"Meta"})
+        fireEvent.keyDown(window, {key:'Alt', repeat: true})
         expect(keysPressed).toEqual(["Meta"])
         expect(onComplete).toBeCalledTimes(0)
 
@@ -39,6 +40,19 @@ describe('shortcuts register', ()=>{
         fireEvent.keyDown(window, {key:"A"})
         fireEvent.keyDown(window, {key:"B"})
 
+
         expect(keysPressed).toEqual(["Meta", "Alt", "Control", "A", "B"])
+        expect(onComplete).toBeCalledTimes(0)
+    })
+
+    it('Not adds more when repeating key and also not launch if not all are free', ()=>{
+        fireEvent.keyDown(window, {key:"A"})
+        fireEvent.keyDown(window, {key:"B"})
+        fireEvent.keyUp(window, {key:"B"})
+        fireEvent.keyDown(window, {key:"B"})
+        fireEvent.keyDown(window, {key:'Alt', repeat: true})
+
+        expect(keysPressed).toEqual(["B", "A"])
+        expect(onComplete).toBeCalledTimes(0)
     })
 })

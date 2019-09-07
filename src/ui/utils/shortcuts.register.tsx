@@ -1,48 +1,60 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 interface RegisterShortcutsProps {
     onAllReleased:(keys: string[])=>void
     children:React.ComponentType<{keys:string[]}>
 }
 
-const RegisterShortcuts = ({children, onAllReleased}: RegisterShortcutsProps)=>{
-    const count = useRef(0)
-    const [ keys, setKeys ] = useState<string[]>([])
+interface RegisterShortcutsState {
+    keys: string[]
+}
 
-    useEffect(()=>{
-        const onDown = (e: KeyboardEvent)=>{
-            if (e.repeat){
-                return
-            }
-            count.current++;
-            if (keys.indexOf(e.key)===-1){
-                setKeys([...keys, e.key])
-            }
-            e.preventDefault()
+class RegisterShortcuts extends React.Component<RegisterShortcutsProps,RegisterShortcutsState>{
+    private count:number=0;
+
+    constructor(props: RegisterShortcutsProps){
+        super(props)
+        this.state = {keys:[]}
+        this.onDown=this.onDown.bind(this)
+        this.onUp=this.onUp.bind(this)
+    }
+
+    componentDidMount(){
+        window.addEventListener('keyup', this.onUp, true)
+        window.addEventListener('keydown', this.onDown, true)
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('keyup', this.onUp, true)
+        window.removeEventListener('keydown', this.onDown, true)
+    }
+
+    onDown (e: KeyboardEvent){
+        if (e.repeat){
+            return
         }
-
-        const onUp = (e: any)=>{
-            console.log(e)
-            count.current--;
-            console.log(count.current)
-            if (count.current===0){
-                console.log("Release!")
-                onAllReleased(keys)
-            }
+        this.count++;
+        var keys = this.state.keys
+        if (keys.indexOf(e.key)===-1){
+            this.setState({keys: [...keys, e.key]})
         }
+        e.preventDefault()
+    }
 
-        window.addEventListener('keyup', onUp, true)
-        window.addEventListener('keydown', onDown, true)
-
-        return ()=>{
-            window.removeEventListener('keyup', onUp, true)
-            window.removeEventListener('keydown', onDown, true)
+    onUp(e: KeyboardEvent){
+        this.count--;
+        if (this.count===0){
+            console.log("Release!")
+            this.props.onAllReleased(this.state.keys)
         }
-    }, [keys])
+    }
 
-    const Child = children
+    render(){
+        const Child = this.props.children
+        const keys = this.state.keys
 
-    return <Child keys={keys} />
+        return <Child keys={keys} />
+    }
 }
 
 export default RegisterShortcuts
