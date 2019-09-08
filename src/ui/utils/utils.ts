@@ -4,7 +4,8 @@ export const mergeObjects = (obj1: any, obj2: any)=>{
         .reduce((ac, key)=>{
             let obj2Prop = obj2[key]
             if (typeof obj2Prop === "object"){
-                obj2Prop = mergeObjects(obj1[key] || {}, obj2Prop)
+                const parent = obj1[key] || {}
+                obj2Prop = mergeObjects(parent, obj2Prop)
             }
             return {
                 ...ac,
@@ -15,7 +16,6 @@ export const mergeObjects = (obj1: any, obj2: any)=>{
         ...obj1,
         ...newProps,
     }
-
 }
 
 export const getGeneric = <T extends {}, E>(key: string[], config: T, set: (value:T)=>void)=>{

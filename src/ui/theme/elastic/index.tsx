@@ -1,4 +1,3 @@
-import React from 'react';
 import Checkbox from './checkbox';
 import './index.scss';
 import Page from './page';
@@ -8,13 +7,4 @@ import Spacer from './spacer';
 import TextField from './text_field';
 
 
-export default {
-    Checkbox,
-    Provider: ({children}:any)=><div className="elastic">{children}</div>,
-    Section,
-    Select,
-    Spacer,
-    TextField,
-    Page
-
-}
+export { Checkbox, Section, Select, Spacer, TextField, Page };

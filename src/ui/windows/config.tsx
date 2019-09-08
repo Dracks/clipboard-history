@@ -1,9 +1,10 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { Config } from "../../common/config";
 import { ChangeContext } from '../../common/types';
-import { ThemeContext } from '../theme/context';
+import { Checkbox, Page, Section, Spacer, TextField } from '../theme';
 import { getGeneric, mergeObjects } from '../utils/utils';
 import { WindowPageProps } from './interface';
+
 
 const EXPLANATIONS : {
     [key in ChangeContext]: string
@@ -20,7 +21,6 @@ const Configuration = ({data, save}: WindowPageProps<Config>)=>{
     const update = useCallback((newData: Partial<Config>)=>{
         setConfig(mergeObjects(config, newData))
     }, [config])
-    const {Section, Checkbox, TextField, Page, Spacer} = useContext(ThemeContext)
     return <Page >
             <Section title="General" >
                 <h2>History length</h2>

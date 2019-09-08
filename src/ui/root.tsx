@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Observable } from 'rxjs';
 import { ContextData, LoadPage, PageDataSend, PlatformEnum } from '../common/types';
-import { ThemeProvider } from './theme/context';
 import Title from './title';
 import Content from './windows';
 
@@ -31,10 +30,10 @@ const Root = ({onSave,loadPageInfo}: RootProps) => {
     }, [])
 
     if (pageInfo){
-        return <ThemeProvider platform={contextInfo.platform }>
+        return <div>
                     <Title name={pageInfo.name}/>
                     <Content data={pageInfo} setData={save}/>
-                </ThemeProvider>
+                </div>
     }
     return <div >
         <Title name="Loading..."/>

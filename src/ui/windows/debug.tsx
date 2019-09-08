@@ -1,16 +1,13 @@
 import React from 'react';
-import { ThemeContext } from '../theme/context';
+import { Section } from '../theme';
 import { WindowPageProps } from './interface';
 
 
 const Debug=(args: WindowPageProps<String>)=>{
-    return (<ThemeContext.Consumer>
-        {({Section})=>(
+    return (
         <Section title="Section title!">
-            Contents
+            {args.data}
         </Section>
-        )}
-        </ThemeContext.Consumer>
     )
 }
 
