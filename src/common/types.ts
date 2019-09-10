@@ -8,15 +8,52 @@ export type PageData = {
 }
 
 export type PageDataSend = {
-    page: WindowPage,
+    name: WindowPage,
     data: Config | String
+}
+
+export type LoadPage = {
+    context: ContextData,
+    page: PageDataSend
 }
 
 export enum EventsName {
     Log = "log",
     Error = "error",
     Load = "load",
-    Save = "save",
+    Save = "save"
+}
+
+export enum PlatformEnum {
+    mac="mac",
+    win="win",
+    linux="linux"
+}
+
+type NodePlatform = 'aix'
+| 'android'
+| 'darwin'
+| 'freebsd'
+| 'linux'
+| 'openbsd'
+| 'sunos'
+| 'win32'
+| 'cygwin';
+
+export const NodePlatformToEnum : {[key in NodePlatform]:PlatformEnum} = {
+    aix: PlatformEnum.linux,
+    android: PlatformEnum.linux,
+    darwin: PlatformEnum.mac,
+    freebsd: PlatformEnum.linux,
+    linux: PlatformEnum.linux,
+    openbsd: PlatformEnum.linux,
+    sunos: PlatformEnum.linux,
+    win32: PlatformEnum.win,
+    cygwin: PlatformEnum.win,
+}
+
+export interface ContextData {
+    platform: PlatformEnum
 }
 
 export enum ChangeContext{

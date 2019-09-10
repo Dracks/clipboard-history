@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Section } from '../theme';
 import { WindowPageProps } from './interface';
 
 
 const Debug=(args: WindowPageProps<String>)=>{
-    useEffect(()=>{
-        args.save("ping" as any)
-    })
-    return <div>{args.data}</div>
+    return (
+        <Section title="Section title!">
+            {args.data}
+        </Section>
+    )
 }
-
 
 export default Debug

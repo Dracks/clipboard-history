@@ -40,10 +40,12 @@ class ConfigService{
 
     openEdit(){
         const data = this.wm.createSingleInstance("config", this.config)
-        data.subscribe((d)=>{
-            this.config = d;
-            this.save()
-        })
+        if (data){
+            data.subscribe((d)=>{
+                this.config = d;
+                this.save()
+            })
+        }
     }
 
     save(){
