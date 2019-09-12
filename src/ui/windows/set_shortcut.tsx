@@ -24,7 +24,6 @@ const SetShortcut = ({save}: SetShortcutProps)=>{
         return mapper[k] || k
     }, [platform])
     const saveFn = useCallback((keys:string[])=>{
-        console.log("RELEASE!")
         save(keys.map(mapFn).reduce((ac,e)=>ac+"+"+e))
     }, [mapFn, save])
     return <div>

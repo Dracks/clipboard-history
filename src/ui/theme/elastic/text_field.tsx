@@ -13,7 +13,7 @@ const TextField = {
     String: ({value, onChange, disabled, onClick}:TextFieldProps<string>)=>
         <EuiFieldText
           value={value}
-          onChange={getOnChange(onChange, identity)}
+          onChange={onChange && getOnChange(onChange, identity) }
           readOnly={disabled}
           onClick={onClick}
         />,
@@ -21,7 +21,7 @@ const TextField = {
     Number: ({value, onChange, disabled}: TextFieldProps<number>)=>
         <EuiFieldNumber
           value={value}
-          onChange={getOnChange(onChange, number)}
+          onChange={onChange && getOnChange(onChange, number)}
           disabled={disabled}
         />,
 }

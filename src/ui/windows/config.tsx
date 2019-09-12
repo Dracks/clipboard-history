@@ -40,7 +40,9 @@ const Configuration = ({data, save}: WindowPageProps<Config>)=>{
                 <Spacer />
                 {shortcuts.map((key: keyof ShortcutsConfig)=>{
                     const {value, onChange} = getGeneric(["shortcuts", key], config, ()=>undefined)
-                    const {modal, show} = useModal(({close})=><SetShortcut save={(shortcut)=>{onChange(shortcut);close()}}/>, key)
+                    const {modal, show} = useModal(({close})=><SetShortcut save={(shortcut)=>{onChange(shortcut);close()}}/>, {
+                        title: key
+                    })
                     return <div key={key}>
                         {modal}
                         <div>{SHORTCUTS_EXPLANATIONS[key]}</div>

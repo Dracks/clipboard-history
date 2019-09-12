@@ -55,4 +55,30 @@ describe('shortcuts register', ()=>{
         expect(keysPressed).toEqual(["A", "B"])
         expect(onComplete).toBeCalledTimes(0)
     })
+
+    it('When release the problematics keys at the same time as other keys, it will detect it', ()=>{
+        fireEvent.keyDown(window, {key:"Control"})
+        fireEvent.keyDown(window, {key:"Alt"})
+        fireEvent.keyDown(window, {key:"Meta"})
+        fireEvent.keyDown(window, {key:"Shift", cntrlKey: true, altKey: true, metaKey:true, shiftKey:true})
+
+        fireEvent.keyUp(window, {key:"Control", shiftKey: true})
+        expect(onComplete).toBeCalledTimes(0)
+
+        fireEvent.keyUp(window, {key:"Shift"})
+        expect(onComplete).toBeCalledTimes(1)
+    })
+
+    it('When release a normal key, with some alter keys', ()=>{
+        fireEvent.keyDown(window, {key:"Control"})
+        fireEvent.keyDown(window, {key:"A"})
+        fireEvent.keyDown(window, {key:"B"})
+        fireEvent.keyDown(window, {key:"Shift", ctrlKey: true, shiftKey:true})
+
+        fireEvent.keyUp(window, {key:"A", shiftKey: true})
+        expect(onComplete).toBeCalledTimes(0)
+
+        fireEvent.keyUp(window, {key:"B"})
+        expect(onComplete).toBeCalledTimes(1)
+    })
 })
