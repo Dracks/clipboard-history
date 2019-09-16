@@ -62,6 +62,10 @@ describe('Config Service', ()=>{
                 next: "next",
                 previous: "prev",
                 removeCurrent: "remove"
+            },
+            tray: {
+                trim: false,
+                size: 50
             }
         }
 
@@ -76,6 +80,10 @@ describe('Config Service', ()=>{
             next: "next",
             previous: "prev",
             removeCurrent: "remove"
+        })
+        expect(subject.tray).toEqual({
+            trim: false,
+            size: 50
         })
     })
 

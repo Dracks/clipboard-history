@@ -39,7 +39,7 @@ app.on('ready', () => {
         electron: new ElectronNotificationSystem()
     })
 
-    const tray = new ClipboardHistoryTray(bus, app);
+    const tray = new ClipboardHistoryTray(bus, configService, app);
     tray.registerOpen()
 
     const shortcuts = new ClipboardShortcuts(bus, configService, globalShortcut);

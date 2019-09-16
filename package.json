@@ -15,9 +15,9 @@
     "test:cov": "jest --config config/jest.json --coverage",
     "test:travis-cov": "jest --config config/jest.travis.json",
     "package": "npm run build && npm run package:mac && npm run package:windows && npm run package:linux",
-    "package:mac": "electron-packager . my-clipboard-manager --overwrite --platform=darwin --arch=x64 --prune=true --out=build --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.icns\" --asar",
-    "package:windows": "electron-packager . my-clipboard-manager --overwrite --platform=win32 --arch=ia32 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.ico\" --asar",
-    "package:linux": "electron-packager . my-clipboard-manager --overwrite --platform=linux --arch=x64 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='my-clipboard-manager' --version-string.ProductName='my-clipboard-manager' --icon=\"icons/icon.ico\" --asar"
+    "package:mac": "electron-packager . clipboard-history --overwrite --platform=darwin --arch=x64 --prune=true --out=build --version-string.FileDescription='clipboard-history' --version-string.ProductName='clipboard-history' --icon=\"icons/icon.icns\" --asar",
+    "package:windows": "electron-packager . clipboard-history --overwrite --platform=win32 --arch=ia32 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='clipboard-history' --version-string.ProductName='clipboard-history' --icon=\"icons/icon.ico\" --asar",
+    "package:linux": "electron-packager . clipboard-history --overwrite --platform=linux --arch=x64 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='clipboard-history' --version-string.ProductName='clipboard-history' --icon=\"icons/icon.ico\" --asar"
   },
   "dependencies": {
     "node-notifier": "^5.4.3",
