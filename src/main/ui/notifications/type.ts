@@ -1,5 +1,5 @@
 interface NotificationSystemType {
-    notify(current: string)
+    notify(current: string):void
 }
 
 export default NotificationSystemType

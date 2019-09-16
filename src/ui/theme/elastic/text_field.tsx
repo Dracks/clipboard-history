@@ -10,16 +10,19 @@ const getOnChange = <T extends any>(onChange:(newValue:T)=>void, parser:(newValu
 
 
 const TextField = {
-    String: ({value, onChange}:TextFieldProps<string>)=>
+    String: ({value, onChange, disabled, onClick}:TextFieldProps<string>)=>
         <EuiFieldText
           value={value}
-          onChange={getOnChange(onChange, identity)}
+          onChange={onChange && getOnChange(onChange, identity) }
+          readOnly={disabled}
+          onClick={onClick}
         />,
 
-    Number: ({value, onChange}: TextFieldProps<number>)=>
+    Number: ({value, onChange, disabled}: TextFieldProps<number>)=>
         <EuiFieldNumber
           value={value}
-          onChange={getOnChange(onChange, number)}
+          onChange={onChange && getOnChange(onChange, number)}
+          disabled={disabled}
         />,
 }
 

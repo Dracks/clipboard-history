@@ -31,7 +31,7 @@ describe('Window manager', ()=>{
             show: jest.fn()
         } as any;
         bwConstructor = jest.fn()
-        function temp(...args){
+        function temp(...args: any[]){
             bwConstructor(...args)
         }
         temp.prototype = bwMock
@@ -116,6 +116,37 @@ describe('Window manager', ()=>{
             getIpcOn(EventsName.Save)({}, {name: 'Debug', data: 'Some data'})
             expect(subscriberMock.next).toBeCalledTimes(1)
             expect(subscriberMock.next).toBeCalledWith('Some data')
+        })
+    })
+
+    describe('Log output', ()=>{
+        let oldLog: any
+        let oldError: any
+
+        beforeEach(()=>{
+            oldLog = console.log
+            oldError = console.error
+            console.log= jest.fn()
+            console.error = jest.fn()
+        })
+
+        afterEach(()=>{
+            console.log = oldLog,
+            console.error = oldError
+        })
+
+        it('Call correcly on log', ()=>{
+            const subject = getIpcOn(EventsName.Log)
+            subject({}, ["Hi", "world"])
+            expect(console.log).toBeCalledTimes(1)
+            expect(console.log).toBeCalledWith("Hi", "world")
+        })
+
+        it('Call correcly on error', ()=>{
+            const subject = getIpcOn(EventsName.Error)
+            subject({}, ["Hi", "error"])
+            expect(console.error).toBeCalledTimes(1)
+            expect(console.error).toBeCalledWith("Hi", "error")
         })
     })
 })

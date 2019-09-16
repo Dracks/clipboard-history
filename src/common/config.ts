@@ -2,6 +2,13 @@ import { ChangeContext } from "./types";
 
 export type NotificationSystem = 'electron' | 'node';
 
+export type KeyboardShortcut = string
+
+export interface ShortcutsConfig {
+    next: KeyboardShortcut,
+    previous: KeyboardShortcut,
+    removeCurrent: KeyboardShortcut
+}
 
 export interface Config {
     historyLength: number,
@@ -9,5 +16,22 @@ export interface Config {
         type?: NotificationSystem,
     } & {
         [key in ChangeContext]: boolean
+    },
+    shortcuts: ShortcutsConfig
+}
+
+export const initialConfig : Config = {
+    historyLength: 15,
+    notifications: {
+        type: 'electron',
+        new: false,
+        shortcut: true,
+        manual: false,
+        start: false
+    },
+    shortcuts: {
+        next: 'CommandOrControl+F12',
+        previous: 'CommandOrControl+F11',
+        removeCurrent: 'CommandOrControl+F9',
     }
 }

@@ -9,7 +9,7 @@
     "build:ui": "webpack --config config/webpack.prod.js",
     "dev": "concurrently --handle-input \"wait-on dist/main/index.js && nodemon\" \"tsc -w -p config/tsconfig.main.json\" \"webpack --config config/webpack.dev.js\"",
     "innosetup": "node innosetup.js",
-    "start": "tsc -p config/tsconfig.main.json && electron .",
+    "start": "npm run build && electron .",
     "test": "jest --config config/jest.json",
     "test:watch": "jest --config config/jest.json --watch",
     "test:cov": "jest --config config/jest.json --coverage",
@@ -26,6 +26,8 @@
   "devDependencies": {
     "@elastic/datemath": "^5.0.2",
     "@elastic/eui": "^13.7.0",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.1.4",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.2",
     "@types/node-notifier": "^5.4.0",

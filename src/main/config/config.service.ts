@@ -1,19 +1,9 @@
-import { Config, NotificationSystem } from "../../common/config";
+import { Config, NotificationSystem, ShortcutsConfig } from "../../common/config";
 import { ChangeContext } from "../../common/types";
 import DataBase from "../core/db";
 import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
 import WindowManager from '../window/window.manager';
 
-export const initialConfig : Config = {
-    historyLength: 15,
-    notifications: {
-        type: 'electron',
-        new: false,
-        shortcut: true,
-        manual: false,
-        start: false
-    }
-}
 
 class ConfigService{
     private config: Config
@@ -22,7 +12,7 @@ class ConfigService{
         return this.config.historyLength
     }
 
-    get typeNotifications(): NotificationSystem{
+    get typeNotifications(): NotificationSystem | undefined{
         return this.config.notifications.type
     }
 
@@ -30,7 +20,11 @@ class ConfigService{
         const configNotifications = this.config.notifications
         return Object
             .values(ChangeContext)
-            .filter(key=>configNotifications[key])
+            .filter((key:ChangeContext)=>configNotifications[key])
+    }
+
+    get shortcuts(): ShortcutsConfig{
+        return this.config.shortcuts
     }
 
     constructor(private bus: ClipboardEventEmitter, private db: DataBase<Config>, private wm: WindowManager){

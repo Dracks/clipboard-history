@@ -2,14 +2,21 @@
     "moduleFileExtensions": [
         "js",
         "json",
-        "ts"
+        "ts",
+        "tsx"
     ],
     "rootDir": "../src",
-    "testRegex": ".spec.ts$",
+    "testRegex": ".spec.tsx?$",
     "transform": {
-        "^.+\\.ts$": "ts-jest"
+        "^.+\\.tsx?$": "ts-jest"
     },
-    "testEnvironment": "node",
+    "coverageDirectory": "../coverage",
     "collectCoverage": true,
-    "coverageReporters":["text-lcov"]
+    "coverageReporters":["text-lcov"],
+    "testEnvironment": "jsdom",
+    "globals": {
+        "ts-jest": {
+          "tsConfig": "./config/tsconfig.json"
+        }
+    }
 }

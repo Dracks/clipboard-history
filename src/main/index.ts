@@ -2,8 +2,8 @@
 import { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain } from 'electron';
 import { EventEmitter } from 'events';
 import * as NodeNotifier from 'node-notifier';
-import { Config } from '../common/config';
-import ConfigService, { initialConfig } from './config/config.service';
+import { Config, initialConfig } from '../common/config';
+import ConfigService from './config/config.service';
 import Core from './core/core';
 import DataBase from './core/db';
 import { name as title } from './package';
@@ -42,7 +42,7 @@ app.on('ready', () => {
     const tray = new ClipboardHistoryTray(bus, app);
     tray.registerOpen()
 
-    const shortcuts = new ClipboardShortcuts(bus, globalShortcut);
+    const shortcuts = new ClipboardShortcuts(bus, configService, globalShortcut);
     shortcuts.registerShortcuts()
 
     const db = new DataBase<Array<ClipboardValue>>('clipboard.json', app, [])
@@ -51,5 +51,5 @@ app.on('ready', () => {
     core.startMonitoringClipboard()
     console.log("We are ready")
 
-    //windowManager.create('config', initialConfig)
+    // new WindowManager(ipcMain, BrowserWindow).create('Debug', "Test!")
 })

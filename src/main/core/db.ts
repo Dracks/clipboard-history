@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { mergeObjects } from '../../common/utils';
 
 class DataBase<T> {
     private dbPath: string;
@@ -10,7 +11,10 @@ class DataBase<T> {
         if (!fs.existsSync(userData)){
             fs.mkdirSync(userData)
         }
-        if (!fs.existsSync(this.dbPath)){
+        if (fs.existsSync(this.dbPath)){
+            const oldData = this.read()
+            this.write(mergeObjects(def, oldData))
+        } else {
             this.write(def);
         }
     }

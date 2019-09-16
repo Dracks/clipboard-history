@@ -1,12 +1,12 @@
 import { EventEmitter } from 'events';
 import createMockInstance from 'jest-create-mock-instance';
 import { Observable, Subscriber } from 'rxjs';
-import { Config } from '../../common/config';
+import { Config, initialConfig } from '../../common/config';
 import DataBase from '../core/db';
 import { getCallback, GetRegisteredCallbackFn } from '../core/utils.test';
 import { ClipboardEventEnum } from '../types';
 import WindowManager from '../window/window.manager';
-import ConfigService, { initialConfig } from './config.service';
+import ConfigService from './config.service';
 
 const EDIT_CONFIG = ClipboardEventEnum.EditConfig
 const CONFIG_CHANGE = ClipboardEventEnum.ConfigChanged
@@ -39,7 +39,7 @@ describe('Config Service', ()=>{
     })
 
     it('When edit, opens a window & save the data', ()=>{
-        let subscription: Subscriber<Config>
+        let subscription: Subscriber<Config> = null as any
         const obs = Observable.create((s: Subscriber<Config>)=>{
             subscription = s
         })
@@ -49,14 +49,19 @@ describe('Config Service', ()=>{
         expect(wmMock.createSingleInstance).toBeCalledTimes(1)
         expect(wmMock.createSingleInstance).toBeCalledWith("config", initialConfig)
 
-        const updateData = {
+        const updateData : Config = {
             historyLength: 5,
             notifications: {
-                type: null,
+                type: undefined,
                 manual: true,
                 shortcut:false,
                 new: true,
                 start: true
+            },
+            shortcuts: {
+                next: "next",
+                previous: "prev",
+                removeCurrent: "remove"
             }
         }
 
@@ -67,6 +72,11 @@ describe('Config Service', ()=>{
         expect(dbMock.write).toBeCalledWith(updateData)
         expect(subject.maxHistory).toBe(5)
         expect(subject.selectedContextNotifications).toEqual(["new", "manual", "start"])
+        expect(subject.shortcuts).toEqual({
+            next: "next",
+            previous: "prev",
+            removeCurrent: "remove"
+        })
     })
 
 })

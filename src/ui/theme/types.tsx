@@ -1,3 +1,11 @@
+import { ButtonSize } from "@elastic/eui/src/components/button/button";
+
+export interface ButtonProps {
+    children?: any,
+    onClick: ()=>void
+    size?: ButtonSize
+    disabled?: boolean
+}
 
 export interface CheckboxProps{
     id: string,
@@ -24,5 +32,7 @@ export interface SelectProps {
 
 export interface TextFieldProps<T>{
     value: T,
-    onChange: (newValue:T)=>void
+    onChange?: (newValue:T)=>void
+    disabled?: boolean
+    onClick?: ()=>void
 }

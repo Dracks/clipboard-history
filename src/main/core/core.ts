@@ -6,7 +6,7 @@ import DataBase from "./db";
 export default class Core{
     private clipboardHistory = new Array<ClipboardValue>()
     private selected?: SelectedClipboard
-    private watchId: NodeJS.Timeout;
+    private watchId?: any //ReturnType<typeof setTimeout>;
 
     constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private clipboard: Electron.Clipboard, private db: DataBase<Array<ClipboardValue>>){
         this.clipboardHistory = db.read()
@@ -72,7 +72,7 @@ export default class Core{
     }
 
     private removeCurrent(context: ChangeContext){
-        let currentIndex = this.selected.index
+        let currentIndex = this.selected!.index
         this.clipboardHistory.splice(currentIndex, 1)
         if (currentIndex>= this.clipboardHistory.length){
             currentIndex = 0

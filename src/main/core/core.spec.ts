@@ -117,7 +117,7 @@ describe('core', ()=>{
         })
 
         it('Checking the register and remove', ()=>{
-            const clearIntervalSpy = jest.spyOn(global, 'clearInterval').mockReturnValueOnce(null)
+            const clearIntervalSpy = jest.spyOn(global, 'clearInterval').mockImplementation(()=>undefined)
 
             subject.startMonitoringClipboard()
             expect(setIntervalSpy).toBeCalledTimes(1)
