@@ -1,4 +1,4 @@
-import { Config, NotificationSystem, ShortcutsConfig } from "../../common/config";
+import { Config, NotificationSystem, ShortcutsConfig, TrayConfig } from "../../common/config";
 import { ChangeContext } from "../../common/types";
 import DataBase from "../core/db";
 import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
@@ -25,6 +25,10 @@ class ConfigService{
 
     get shortcuts(): ShortcutsConfig{
         return this.config.shortcuts
+    }
+
+    get tray(): TrayConfig{
+        return this.config.tray
     }
 
     constructor(private bus: ClipboardEventEmitter, private db: DataBase<Config>, private wm: WindowManager){

@@ -53,6 +53,17 @@ const Configuration = ({data, save}: WindowPageProps<Config>)=>{
                 })}
             </Section>
             <Spacer/>
+            <Section title="Tray" >
+                <h2>Length show in tray</h2>
+                <TextField.Number {...getGeneric(["tray", "size"], config, update)}/>
+                <Spacer />
+                    <Checkbox
+                        id="tray.trim"
+                        text="Trim clipboard values"
+                        {...getGeneric(["tray", "trim"], config, update)}
+                        />
+            </Section>
+            <Spacer/>
             <Section title="notifications">
                 {Object.values(ChangeContext).map((key:ChangeContext)=>(
                     <div key={key}>

@@ -10,6 +10,11 @@ export interface ShortcutsConfig {
     removeCurrent: KeyboardShortcut
 }
 
+export interface TrayConfig {
+    trim: boolean
+    size: number
+}
+
 export interface Config {
     historyLength: number,
     notifications: {
@@ -18,6 +23,7 @@ export interface Config {
         [key in ChangeContext]: boolean
     },
     shortcuts: ShortcutsConfig
+    tray: TrayConfig
 }
 
 export const initialConfig : Config = {
@@ -33,5 +39,9 @@ export const initialConfig : Config = {
         next: 'CommandOrControl+F12',
         previous: 'CommandOrControl+F11',
         removeCurrent: 'CommandOrControl+F9',
+    },
+    tray: {
+        trim: false,
+        size: 20
     }
 }
