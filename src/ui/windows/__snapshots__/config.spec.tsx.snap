@@ -1,0 +1,642 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ui/windows/config Renders well 1`] = `
+<div>
+  <div
+    class="euiPage"
+  >
+    <div
+      class="euiPageBody"
+    >
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="General"
+          >
+            General
+          </span>
+        </span>
+        <h2>
+          History length
+        </h2>
+        <div
+          class="euiFormControlLayout"
+        >
+          <div
+            class="euiFormControlLayout__childrenWrapper"
+          >
+            <input
+              class="euiFieldNumber"
+              type="number"
+              value="15"
+            />
+          </div>
+        </div>
+        <div
+          class="euiSpacer euiSpacer--l"
+        />
+        <div>
+          <div>
+            The shortcut to select next value
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="CommandOrControl+F12"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            The shortcut to select previous value
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="CommandOrControl+F11"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            The shortcut to remove the current value from the history and move to next
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="CommandOrControl+F9"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="euiSpacer euiSpacer--l"
+      />
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="Tray"
+          >
+            Tray
+          </span>
+        </span>
+        <h2>
+          Length show in tray
+        </h2>
+        <div
+          class="euiFormControlLayout"
+        >
+          <div
+            class="euiFormControlLayout__childrenWrapper"
+          >
+            <input
+              class="euiFieldNumber"
+              type="number"
+              value="20"
+            />
+          </div>
+        </div>
+        <div
+          class="euiSpacer euiSpacer--l"
+        />
+        <div
+          class="euiCheckbox"
+        >
+          <input
+            class="euiCheckbox__input"
+            id="tray.trim"
+            type="checkbox"
+          />
+          <div
+            class="euiCheckbox__square"
+          />
+          <label
+            class="euiCheckbox__label"
+            for="tray.trim"
+          >
+            Trim clipboard values
+          </label>
+        </div>
+      </div>
+      <div
+        class="euiSpacer euiSpacer--l"
+      />
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="notifications"
+          >
+            notifications
+          </span>
+        </span>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="new"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="new"
+            >
+              When the clipboard changed
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              checked=""
+              class="euiCheckbox__input"
+              id="shortcut"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="shortcut"
+            >
+              When the change is provoqued by a shortcut
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="manual"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="manual"
+            >
+              When some clipboard is selected from the tray
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="start"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="start"
+            >
+              When the application starts
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ui/windows/config Restore defaults: Button refresh not disabled 1`] = `
+<div>
+  <div
+    class="euiPage"
+  >
+    <div
+      class="euiPageBody"
+    >
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="General"
+          >
+            General
+          </span>
+        </span>
+        <h2>
+          History length
+        </h2>
+        <div
+          class="euiFormControlLayout"
+        >
+          <div
+            class="euiFormControlLayout__childrenWrapper"
+          >
+            <input
+              class="euiFieldNumber"
+              type="number"
+              value="15"
+            />
+          </div>
+        </div>
+        <div
+          class="euiSpacer euiSpacer--l"
+        />
+        <div>
+          <div>
+            The shortcut to select next value
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="Ping Pollo"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            The shortcut to select previous value
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="CommandOrControl+F11"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            The shortcut to remove the current value from the history and move to next
+          </div>
+          <div
+            style="display: flex;"
+          >
+            <div
+              style="flex-grow: 1;"
+            >
+              <div>
+                <div
+                  class="euiFormControlLayout euiFormControlLayout--readOnly"
+                >
+                  <div
+                    class="euiFormControlLayout__childrenWrapper"
+                  >
+                    <input
+                      class="euiFieldText"
+                      readonly=""
+                      type="text"
+                      value="CommandOrControl+F9"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              aria-label="refresh"
+              class="euiButtonIcon euiButtonIcon--primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                title="icon"
+              >
+                {"className":"euiButtonIcon__icon","type":"refresh","size":"m","aria-hidden":"true"}
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="euiSpacer euiSpacer--l"
+      />
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="Tray"
+          >
+            Tray
+          </span>
+        </span>
+        <h2>
+          Length show in tray
+        </h2>
+        <div
+          class="euiFormControlLayout"
+        >
+          <div
+            class="euiFormControlLayout__childrenWrapper"
+          >
+            <input
+              class="euiFieldNumber"
+              type="number"
+              value="20"
+            />
+          </div>
+        </div>
+        <div
+          class="euiSpacer euiSpacer--l"
+        />
+        <div
+          class="euiCheckbox"
+        >
+          <input
+            class="euiCheckbox__input"
+            id="tray.trim"
+            type="checkbox"
+          />
+          <div
+            class="euiCheckbox__square"
+          />
+          <label
+            class="euiCheckbox__label"
+            for="tray.trim"
+          >
+            Trim clipboard values
+          </label>
+        </div>
+      </div>
+      <div
+        class="euiSpacer euiSpacer--l"
+      />
+      <div
+        class="euiPanel euiPanel--paddingMedium euiPanel--hasBetaBadge"
+      >
+        <span
+          class="euiPanel__betaBadgeWrapper"
+        >
+          <span
+            class="euiBetaBadge euiPanel__betaBadge"
+            title="notifications"
+          >
+            notifications
+          </span>
+        </span>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="new"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="new"
+            >
+              When the clipboard changed
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              checked=""
+              class="euiCheckbox__input"
+              id="shortcut"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="shortcut"
+            >
+              When the change is provoqued by a shortcut
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="manual"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="manual"
+            >
+              When some clipboard is selected from the tray
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="euiCheckbox"
+          >
+            <input
+              class="euiCheckbox__input"
+              id="start"
+              type="checkbox"
+            />
+            <div
+              class="euiCheckbox__square"
+            />
+            <label
+              class="euiCheckbox__label"
+              for="start"
+            >
+              When the application starts
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

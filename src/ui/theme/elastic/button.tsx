@@ -15,6 +15,7 @@ const Button = {
         onClick={onClick}
         size={size}
         iconType={icon}
+        aria-label={icon}
         disabled={disabled}
         >{children}</EuiButtonIcon>
     }

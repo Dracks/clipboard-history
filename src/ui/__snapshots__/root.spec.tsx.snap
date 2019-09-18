@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ui/root Should render the debug screen 1`] = `
+<div>
+  <div>
+    Debug data
+    <button>
+      save
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ui/root When saving data, it will change the status, and launch onSave 1`] = `
+<div>
+  <div>
+    other info
+    <button>
+      save
+    </button>
+  </div>
+</div>
+`;
