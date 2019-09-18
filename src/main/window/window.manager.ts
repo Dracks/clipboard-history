@@ -1,13 +1,14 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, IpcMain } from "electron";
 import { Observable, Subscriber } from 'rxjs';
 import { ContextData, EventsName, LoadPage, NodePlatformToEnum, PageData, PageDataSend, WindowPage } from "../../common/types";
+import { ConstructorClass } from "../../common/utils";
 
 
 class WindowManager{
     private pageInstances: {[key in WindowPage]?:Subscriber<PageData[key]>} = {}
     private context: ContextData
 
-    constructor(ipc: IpcMain, private winFactory: {new(options?: BrowserWindowConstructorOptions):BrowserWindow}){
+    constructor(ipc: IpcMain, private winFactory: ConstructorClass<BrowserWindowConstructorOptions, BrowserWindow>){
         ipc.on(EventsName.Log, (events, messages)=>{
             console.log(...messages)
         });

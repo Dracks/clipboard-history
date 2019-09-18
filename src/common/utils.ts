@@ -19,3 +19,5 @@ export const mergeObjects = (obj1: any, obj2: any)=>{
         ...newProps,
     }
 }
+
+export type ConstructorClass<O extends{}, T extends {}> = {new(options?: O):T}
