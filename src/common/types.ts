@@ -38,6 +38,7 @@ type NodePlatform = 'aix'
 | 'openbsd'
 | 'sunos'
 | 'win32'
+| 'netbsd'
 | 'cygwin';
 
 export const NodePlatformToEnum : {[key in NodePlatform]:PlatformEnum} = {
@@ -45,6 +46,7 @@ export const NodePlatformToEnum : {[key in NodePlatform]:PlatformEnum} = {
     android: PlatformEnum.linux,
     darwin: PlatformEnum.mac,
     freebsd: PlatformEnum.linux,
+    netbsd: PlatformEnum.linux,
     linux: PlatformEnum.linux,
     openbsd: PlatformEnum.linux,
     sunos: PlatformEnum.linux,

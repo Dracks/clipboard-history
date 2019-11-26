@@ -1,5 +1,5 @@
 
-import { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain, Notification } from 'electron';
 import { EventEmitter } from 'events';
 import * as NodeNotifier from 'node-notifier';
 import { Config, initialConfig } from '../common/config';
@@ -36,7 +36,7 @@ app.on('ready', () => {
 
     new NotifierUI(bus, configService, {
         node: new NodeNotificationSystem(NodeNotifier),
-        electron: new ElectronNotificationSystem()
+        electron: new ElectronNotificationSystem(Notification)
     })
 
     const tray = new ClipboardHistoryTray(bus, configService, app);
