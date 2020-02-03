@@ -27,18 +27,18 @@ export enum EventsName {
 export enum PlatformEnum {
     mac="mac",
     win="win",
-    linux="linux"
+    linux="linux",
 }
 
 type NodePlatform = 'aix'
 | 'android'
 | 'darwin'
 | 'freebsd'
+| 'netbsd'
 | 'linux'
 | 'openbsd'
 | 'sunos'
 | 'win32'
-| 'netbsd'
 | 'cygwin';
 
 export const NodePlatformToEnum : {[key in NodePlatform]:PlatformEnum} = {

@@ -87,4 +87,9 @@ describe('Config Service', ()=>{
         })
     })
 
+    it('Check if createSingleInstance do not return value', ()=>{
+        getBusCallback(EDIT_CONFIG)()
+        expect(wmMock.createSingleInstance).toBeCalledTimes(1)
+    })
+
 })
