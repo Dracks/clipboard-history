@@ -7,6 +7,7 @@ export default class Core{
     private clipboardHistory = new Array<ClipboardValue>()
     private selected?: SelectedClipboard
     private watchId?: any //ReturnType<typeof setTimeout>;
+    private pushTimeout?: ReturnType<typeof setTimeout>;
 
     constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private clipboard: Electron.Clipboard, private db: DataBase<Array<ClipboardValue>>){
         this.clipboardHistory = db.read()
@@ -14,6 +15,8 @@ export default class Core{
         this.bus.on(ClipboardEventEnum.Clear, this.clear.bind(this))
         this.bus.on(ClipboardEventEnum.RemoveCurrentItem, this.removeCurrent.bind(this))
         this.checkCurrent(ChangeContext.start)
+
+        this.setFirstSelected = this.setFirstSelected.bind(this)
     }
 
     private checkMaxHistorySize(){
@@ -41,9 +44,23 @@ export default class Core{
         }
     }
 
+    private setFirstSelected(){
+        if (this.selected){
+            this.clipboardHistory.unshift(this.selected.value)
+            this.selected.index ++;
+            this.removeCurrent(ChangeContext.update, 0)
+        }
+    }
+
     private setSelected(selected: SelectedClipboard, context: ChangeContext){
+        if (this.pushTimeout){
+            clearTimeout(this.pushTimeout)
+        }
         this.selected = selected
         this.bus.emit(ClipboardEventEnum.TextChanged, this.selected, this.clipboardHistory, context)
+        if (selected.index > 0 ){
+            this.pushTimeout = setTimeout(this.setFirstSelected, 1000)
+        }
     }
 
     private checkCurrent(context: ChangeContext = ChangeContext.new){
@@ -71,7 +88,7 @@ export default class Core{
         }
     }
 
-    private removeCurrent(context: ChangeContext){
+    private removeCurrent(context: ChangeContext, backTo?: number){
         let currentIndex = this.selected!.index
         this.clipboardHistory.splice(currentIndex, 1)
         if (currentIndex>= this.clipboardHistory.length){
@@ -81,7 +98,7 @@ export default class Core{
         this.clipboard.writeText(value)
         this.db.write(this.clipboardHistory)
         this.setSelected({
-            index: currentIndex,
+            index: backTo!==undefined ? backTo : currentIndex,
             value
         }, context)
     }

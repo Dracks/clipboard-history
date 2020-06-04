@@ -1,4 +1,4 @@
-import { ChangeContext } from "./types";
+import { ChangeContextNotification } from "./types";
 
 export type NotificationSystem = 'electron' | 'node';
 
@@ -20,7 +20,7 @@ export interface Config {
     notifications: {
         type?: NotificationSystem,
     } & {
-        [key in ChangeContext]: boolean
+        [key in ChangeContextNotification]: boolean
     },
     shortcuts: ShortcutsConfig
     tray: TrayConfig

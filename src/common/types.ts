@@ -57,8 +57,7 @@ export const NodePlatformToEnum : {[key in NodePlatform]:PlatformEnum} = {
 export interface ContextData {
     platform: PlatformEnum
 }
-
-export enum ChangeContext{
+export enum ChangeContextNotification {
     // When there is a new clipboard detected
     new = "new",
     // If the change is provoqued by a shortcut
@@ -66,5 +65,16 @@ export enum ChangeContext{
     // If it's selected from the tray
     manual = "manual",
     // If is when the application starts
-    start = "start"
+    start = "start",
+}
+export enum ChangeContext {
+    new = "new",
+    // If the change is provoqued by a shortcut
+    shortcut = "shortcut",
+    // If it's selected from the tray
+    manual = "manual",
+    // If is when the application starts
+    start = "start",
+    // internal update, no notification
+    update = "update"
 }

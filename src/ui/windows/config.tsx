@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Config, initialConfig, ShortcutsConfig } from "../../common/config";
-import { ChangeContext } from '../../common/types';
+import { ChangeContextNotification } from '../../common/types';
 import { mergeObjects } from '../../common/utils';
 import SetShortcut from '../components/set_shortcut';
 import { Button, Checkbox, Page, Section, Spacer, TextField } from '../theme';
@@ -9,7 +9,7 @@ import { WindowPageProps } from './interface';
 
 
 const NOTIFICATIONS_EXPLANATIONS : {
-    [key in ChangeContext]: string
+    [key in ChangeContextNotification]: string
 } = {
     manual: "When some clipboard is selected from the tray",
     new: "When the clipboard changed",
@@ -65,7 +65,7 @@ const Configuration = ({data, save}: WindowPageProps<Config>)=>{
             </Section>
             <Spacer/>
             <Section title="notifications">
-                {Object.values(ChangeContext).map((key:ChangeContext)=>(
+                {Object.values(ChangeContextNotification).map((key:ChangeContextNotification)=>(
                     <div key={key}>
                         <Checkbox
                             id={key}

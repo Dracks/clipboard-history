@@ -1,5 +1,5 @@
 import { Config, NotificationSystem, ShortcutsConfig, TrayConfig } from "../../common/config";
-import { ChangeContext } from "../../common/types";
+import { ChangeContextNotification } from "../../common/types";
 import DataBase from "../core/db";
 import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
 import WindowManager from '../window/window.manager';
@@ -16,11 +16,11 @@ class ConfigService{
         return this.config.notifications.type
     }
 
-    get selectedContextNotifications(): Array<ChangeContext>{
+    get selectedContextNotifications(): Array<ChangeContextNotification>{
         const configNotifications = this.config.notifications
         return Object
-            .values(ChangeContext)
-            .filter((key:ChangeContext)=>configNotifications[key])
+            .values(ChangeContextNotification)
+            .filter((key:ChangeContextNotification)=>configNotifications[key])
     }
 
     get shortcuts(): ShortcutsConfig{
