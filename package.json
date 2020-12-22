@@ -20,7 +20,7 @@
     "package:linux": "electron-packager . clipboard-history --overwrite --platform=linux --arch=x64 --prune=true --out=build --version-string.CompanyName=dotenorio --version-string.FileDescription='clipboard-history' --version-string.ProductName='clipboard-history' --icon=\"icons/icon.ico\" --asar"
   },
   "dependencies": {
-    "node-notifier": "^5.4.3",
+    "node-notifier": "^8.0.1",
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
