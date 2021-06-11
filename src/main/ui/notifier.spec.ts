@@ -3,7 +3,7 @@ import createMockInstance from "jest-create-mock-instance";
 import ConfigService from "../config/config.service";
 import { getCallback, GetRegisteredCallbackFn, setProp } from "../core/utils.test";
 import { ClipboardEventEnum } from "../types";
-import { ElectronNotificationSystem, NodeNotificationSystem } from "./notifications";
+import {  NodeNotificationSystem } from "./notifications";
 import NotificationSystem from './notifications/type';
 import NotifierUI from './notifier';
 
@@ -20,14 +20,12 @@ describe('Notifier', ()=>{
     beforeEach(()=>{
         busMock = createMockInstance(EventEmitter)
         configMock = createMockInstance(ConfigService)
-        electronNotMock = createMockInstance(ElectronNotificationSystem)
         nodeNotMock = createMockInstance(NodeNotificationSystem)
         getBusCallback = getCallback(busMock.on);
 
         setProp(configMock, "selectedContextNotifications", ["enabled"])
 
         subject = new NotifierUI(busMock, configMock, {
-            electron: electronNotMock,
             node: nodeNotMock
         })
     })

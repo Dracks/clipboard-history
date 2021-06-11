@@ -1,3 +1,5 @@
+import { QClipboard, QClipboardMode } from "@nodegui/nodegui";
+
 import { ChangeContext } from "../../common/types";
 import ConfigService from "../config/config.service";
 import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectedClipboard } from "../types";
@@ -8,7 +10,7 @@ export default class Core{
     private selected?: SelectedClipboard
     private watchId?: any //ReturnType<typeof setTimeout>;
 
-    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private clipboard: Electron.Clipboard, private db: DataBase<Array<ClipboardValue>>){
+    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, private clipboard: QClipboard, private db: DataBase<Array<ClipboardValue>>){
         this.clipboardHistory = db.read()
         this.bus.on(ClipboardEventEnum.Select, this.onSelect.bind(this))
         this.bus.on(ClipboardEventEnum.Clear, this.clear.bind(this))
@@ -47,7 +49,7 @@ export default class Core{
     }
 
     private checkCurrent(context: ChangeContext = ChangeContext.new){
-        const current = this.clipboard.readText()
+        const current = this.clipboard.text(QClipboardMode.Clipboard)
         if (!this.selected || this.selected.value !== current){
             if (current){
                 this.textChanged(current, context)
@@ -63,7 +65,7 @@ export default class Core{
     private onSelect(index: number, context: ChangeContext){
         if (index<this.clipboardHistory.length){
             const value = this.clipboardHistory[index]
-            this.clipboard.writeText(value as any)
+            this.clipboard.setText(value as any, QClipboardMode.Clipboard)
             this.setSelected({
                 index,
                 value
@@ -78,7 +80,7 @@ export default class Core{
             currentIndex = 0
         }
         const value = this.clipboardHistory[currentIndex]
-        this.clipboard.writeText(value)
+        this.clipboard.setText(value, QClipboardMode.Clipboard)
         this.db.write(this.clipboardHistory)
         this.setSelected({
             index: currentIndex,

@@ -5,7 +5,7 @@ import { Config, initialConfig } from '../../common/config';
 import DataBase from '../core/db';
 import { getCallback, GetRegisteredCallbackFn } from '../core/utils.test';
 import { ClipboardEventEnum } from '../types';
-import WindowManager from '../window/window.manager';
+import WindowManager from '../ui/window-manager';
 import ConfigService from './config.service';
 
 const EDIT_CONFIG = ClipboardEventEnum.EditConfig

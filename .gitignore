@@ -1,4 +1,8 @@
-dist
-build
-coverage
-node_modules
+logs
+*.log
+npm-debug.log*
+coverage/
+dist/
+node_modules/
+Release.key
+.DS_Store

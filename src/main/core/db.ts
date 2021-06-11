@@ -1,12 +1,18 @@
+import { QApplication } from '@nodegui/nodegui';
+import addon from '@nodegui/nodegui/dist/lib/utils/addon'
 import * as fs from 'fs';
 import * as path from 'path';
 import { mergeObjects } from '../../common/utils';
 
+export interface GetPath {
+    getPath: ()=>string
+}
+
 class DataBase<T> {
     private dbPath: string;
 
-    constructor(fileName: string, app: Electron.App, def: T){
-        const userData = app.getPath('userData')
+    constructor(fileName: string, app: GetPath, def: T){
+        const userData = app.getPath()
         this.dbPath = path.join(userData, fileName)
         if (!fs.existsSync(userData)){
             fs.mkdirSync(userData)

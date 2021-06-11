@@ -1,6 +1,6 @@
 import { ChangeContext } from "./types";
 
-export type NotificationSystem = 'electron' | 'node';
+export type NotificationSystem =  'node';
 
 export type KeyboardShortcut = string
 
@@ -29,7 +29,7 @@ export interface Config {
 export const initialConfig : Config = {
     historyLength: 15,
     notifications: {
-        type: 'electron',
+        type: 'node',
         new: false,
         shortcut: true,
         manual: false,

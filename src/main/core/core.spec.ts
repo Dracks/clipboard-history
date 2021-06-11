@@ -1,4 +1,5 @@
 
+import { QClipboard } from '@nodegui/nodegui';
 import { EventEmitter } from 'events';
 import createMockInstance from 'jest-create-mock-instance';
 import { ChangeContext } from '../../common/types';
@@ -17,7 +18,7 @@ describe('core', ()=>{
     let subject: Core
     let busMock: jest.Mocked<EventEmitter>
     let configService: jest.Mocked<ConfigService>
-    let clipboardMock: jest.Mocked<Electron.Clipboard>
+    let clipboardMock: jest.Mocked<QClipboard>
     let dbMock: jest.Mocked<DataBase<any>>
     let bigHistory : Array<String>
     let getBusCallback: GetRegisteredCallbackFn
@@ -53,7 +54,7 @@ describe('core', ()=>{
     it('Initialize correctly with diferent value', ()=>{
         (configService as any).maxHistory = 13
         jest.resetAllMocks()
-        clipboardMock.readText.mockReturnValueOnce("Hi world!")
+        clipboardMock.text.mockReturnValueOnce("Hi world!")
 
         subject = new Core(busMock, configService, clipboardMock, dbMock)
 
@@ -87,7 +88,7 @@ describe('core', ()=>{
         onRemoveItemCallback(contextMock)
         bigHistory.splice(3,1)
 
-        expect(clipboardMock.writeText).toBeCalledWith('4')
+        expect(clipboardMock.setText).toBeCalledWith('4')
         expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {index: 3, value:'4'}, bigHistory, contextMock)
         expect(dbMock.write).toBeCalledWith(bigHistory)
     })
@@ -101,7 +102,7 @@ describe('core', ()=>{
         onRemoveItemCallback(contextMock)
         bigHistory.splice(lastHistoryIndex,1)
 
-        expect(clipboardMock.writeText).toBeCalledWith('0')
+        expect(clipboardMock.text).toBeCalledWith('0')
         expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {index: 0, value:'0'}, bigHistory, contextMock)
     })
 
@@ -133,7 +134,7 @@ describe('core', ()=>{
             const checkClipboard = setIntervalSpy.mock.calls[0][0] as any
 
             const newValue = "New value selected"
-            clipboardMock.readText = jest.fn().mockReturnValueOnce(newValue)
+            clipboardMock.text = jest.fn().mockReturnValueOnce(newValue)
             checkClipboard()
 
             expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {
@@ -146,7 +147,7 @@ describe('core', ()=>{
             subject.startMonitoringClipboard()
             const checkClipboard = setIntervalSpy.mock.calls[0][0] as any
 
-            clipboardMock.readText = jest.fn().mockReturnValueOnce(null)
+            clipboardMock.text = jest.fn().mockReturnValueOnce(null)
             checkClipboard()
 
             expect(busMock.emit).toBeCalledWith(TEXT_CHANGED, {

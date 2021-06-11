@@ -2,7 +2,7 @@ import { Config, NotificationSystem, ShortcutsConfig, TrayConfig } from "../../c
 import { ChangeContext } from "../../common/types";
 import DataBase from "../core/db";
 import { ClipboardEventEmitter, ClipboardEventEnum } from "../types";
-import WindowManager from '../window/window.manager';
+import WindowManager from "../ui/window-manager";
 
 
 class ConfigService{
@@ -37,9 +37,9 @@ class ConfigService{
     }
 
     openEdit(){
-        const data = this.wm.createSingleInstance("config", this.config)
+        const data = this.wm.createConfigWindow( this.config)
         if (data){
-            data.subscribe((d)=>{
+            data.subscribe((d: Config)=>{
                 this.config = d;
                 this.save()
             })

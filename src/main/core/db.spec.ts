@@ -1,3 +1,4 @@
+import { QApplication } from '@nodegui/nodegui';
 import * as fs from 'fs';
 import DataBase from './db';
 
@@ -5,7 +6,7 @@ const TEST_PATH='/tmp/test-clipboard-manager'
 
 describe('Database', ()=>{
     let subject: DataBase<any>
-    let app: jest.Mocked<Electron.App>
+    let app: jest.Mocked<{getPath: ()=>string} & QApplication>
 
     beforeEach(()=>{
         app = {

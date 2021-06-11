@@ -1,14 +1,18 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require('path');
+
+const isProduction = process.env.NODE_ENV == "production" || false
 
 const rootDir = __dirname + "/.."
 module.exports = {
+    mode: isProduction ? "production" : 'development',
 
-    entry: path.resolve(rootDir, "src/ui/index.tsx"),
+    entry: path.resolve(rootDir, "src/main"),
+    target: "node",
 
-    output:{
-        path: path.resolve(rootDir, "dist/ui/"),
-        filename:"[name].js"
+    output: {
+        path: path.resolve(rootDir, "dist/"),
+        filename: "index.js"
     },
 
     resolve: {
@@ -25,32 +29,24 @@ module.exports = {
                     {
                         loader: "ts-loader",
                         options: {
-                            configFile: path.resolve(rootDir, "config/tsconfig.ui.json")
+                            configFile: path.resolve(rootDir, "config/tsconfig.json")
                         }
                     }
                 ]
             },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
-            },
-            {
-                test: /\.s?[ca]ss$/,
-                exclude: /node_modules/,
+                test: /\.node$/,
                 use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader"
+                    {
+                        loader: "native-addon-loader",
+                        options: { name: "[name]-[hash].[ext]" }
+                    }
                 ]
             },
         ]
     },
+    devtool: "source-map",
 
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/ui/index.html'
-        })
-    ],
+    plugins: [new CleanWebpackPlugin()],
 };

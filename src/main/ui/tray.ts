@@ -1,23 +1,44 @@
-import { Menu, MenuItemConstructorOptions, Tray } from "electron";
+import { QAction, QApplication, QIcon, QMenu, QSystemTrayIcon } from "@nodegui/nodegui";
+// import { Menu, MenuItemConstructorOptions, Tray } from "electron";
 import { ChangeContext } from "../../common/types";
 import ConfigService from "../config/config.service";
 import { icon } from "../package";
-import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectedClipboard } from "../types";
-import { REMOVE_ITEM_SHORTCUT } from "./shortcuts";
+import { ClipboardEventEmitter, ClipboardEventEnum, ClipboardValue, SelectCallback, SelectedClipboard } from "../types";
+// import { REMOVE_ITEM_SHORTCUT } from "./shortcuts";
 
+interface MenuAction {
+    label: string,
+    click: SelectCallback
+    type?: string
+}
+
+interface MenuCheckbox {
+    label: string
+    type: 'checkbox'
+    click: SelectCallback
+    checked: boolean
+}
+
+interface MenuSeparator {
+    type: 'separator'
+}
+
+export type MenuItemConstructorOptions = MenuAction | MenuSeparator | MenuCheckbox
 
 export default class ClipboardHistoryTray{
-    private tray: Tray
+    private tray: QSystemTrayIcon
     private template : Array<MenuItemConstructorOptions>= []
-    private contextMenu?: Electron.Menu
+    private contextMenu?: QMenu
     private status ={
         list: Array<ClipboardValue>(),
         current: -1
     }
 
-    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, app: Electron.App){
-        this.tray = new Tray(icon)
+    constructor(private bus: ClipboardEventEmitter, private config: ConfigService, app: QApplication){
+        this.tray = new QSystemTrayIcon()
+        this.tray.setIcon(new QIcon("icons/1024x1024.png"))
         this.tray.setToolTip('Click to show your clipboard history')
+        this.tray.show()
 
         this.template.push({ type: 'separator' })
         this.template.push({
@@ -39,12 +60,11 @@ export default class ClipboardHistoryTray{
             click: ()=>{
                 bus.emit(ClipboardEventEnum.RemoveCurrentItem, ChangeContext.manual)
             },
-            accelerator: REMOVE_ITEM_SHORTCUT
         })
         this.template.push({
             label: 'Exit',
             click: () => {
-                app.exit()
+                app.exit(0)
             }
         })
         this.reloadContextMenu([])
@@ -52,18 +72,27 @@ export default class ClipboardHistoryTray{
         this.bus.on(ClipboardEventEnum.ConfigChanged, this.refresh.bind(this))
     }
 
-    registerOpen(){
-        this.tray.on('double-click', () => {
-            this.tray.popUpContextMenu(this.contextMenu)
-        })
-
-        this.tray.on('click', () => {
-            this.tray.popUpContextMenu(this.contextMenu)
-        })
-    }
-
     private reloadContextMenu(options: Array<MenuItemConstructorOptions>){
-        this.contextMenu = Menu.buildFromTemplate([...options, ...this.template])
+        this.contextMenu = new QMenu();
+        [...this.getCurrentHistory(), ...this.template].forEach(data=>{
+            if (data.type==='separator'){
+                this.contextMenu?.addSeparator()
+            } else if (data.type==='checkbox') {
+                const action = data as MenuCheckbox
+                const qaction = new QAction()
+                qaction.setCheckable(true)
+                qaction.setChecked(action.checked)
+                qaction.setText(action.label)
+                qaction.addEventListener('triggered', action.click as any)
+                this.contextMenu?.addAction(qaction)
+            } else {
+                const action = data as MenuAction
+                const qaction = new QAction()
+                qaction.setText(action.label)
+                qaction.addEventListener('triggered', action.click as any)
+                this.contextMenu?.addAction(qaction)
+            }
+        })
         this.tray.setContextMenu(this.contextMenu)
     }
 

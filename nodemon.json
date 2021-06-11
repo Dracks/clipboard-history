@@ -1,5 +1,5 @@
 {
     "watch": ["dist"],
     "ext": "js",
-    "exec": "electron ."
+    "exec": "qode dist/index.js"
 }
