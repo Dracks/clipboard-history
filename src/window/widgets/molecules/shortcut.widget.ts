@@ -1,5 +1,6 @@
-import { FlexLayout, QIcon, QLabel, QPushButton, QWidget } from "@nodegui/nodegui"
-import { getUniqueId } from "./unique-id"
+import { FlexLayout, QLabel, QPushButton, QWidget } from "@nodegui/nodegui"
+import buttonWx from "../atoms/button.widget"
+import { getUniqueId } from "../unique-id"
 
 const shortcutWx = (initial: string, onSelected: (value: string)=>void, reset: ()=>void)=>{
     const uuid = getUniqueId()
@@ -13,10 +14,7 @@ const shortcutWx = (initial: string, onSelected: (value: string)=>void, reset: (
     labelWx.setText(initial)
     layout.addWidget(labelWx)
 
-    const setButton = new QPushButton()
-    setButton.setObjectName(`set-${uuid}`)
-
-    setButton.setText('🔄 ')
+    const setButton = buttonWx('🔄 ', reset, {objectName: `set-${uuid}`})
     layout.addWidget(setButton)
 
     rootView.setStyleSheet(`

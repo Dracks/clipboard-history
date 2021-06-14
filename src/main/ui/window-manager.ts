@@ -1,18 +1,22 @@
-import { QMainWindow } from "@nodegui/nodegui"
 import { Config } from "../../common/config"
 import ConfigWindow from "../../window/config-window"
+import { Observable } from 'rxjs';
 
 type subscription<T>= {subscribe: (cb:(d:T)=>void)=>void}
 
-
 class WindowManager {
-    private configWindow?: QMainWindow
 
     createConfigWindow(data: Config): subscription<Config> {
-        this.configWindow = ConfigWindow(data)
-        return {
-            subscribe: (cb: (d:Config)=>void)=>undefined
-        }
+        return new Observable((subscription)=>{
+            const window = ConfigWindow(data, (newData)=>{
+                subscription.next(newData)
+            });
+
+            (window as any).addEventListener('Close', ()=>{
+                console.log("Hey we close the window!")
+                subscription.complete()
+            })
+        });
     }
 }
 

@@ -5,6 +5,7 @@ const checkboxWx = (text: string, initial: boolean, onChange: (newValue: boolean
     cb.setText(text)
     cb.setChecked(initial)
     cb.setCheckable(true)
+    cb.addEventListener('clicked', onChange)
     
     return cb;
 }

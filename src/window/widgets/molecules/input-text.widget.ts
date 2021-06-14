@@ -1,8 +1,8 @@
-import { QWidget, FlexLayout, QLabel, AlignmentFlag, QLineEdit } from "@nodegui/nodegui";
-import labelWx from "./atoms/label.widget";
-import { getUniqueId } from "./unique-id";
+import { QWidget, FlexLayout, AlignmentFlag, QLineEdit } from "@nodegui/nodegui";
+import labelWx from "../atoms/label.widget";
+import { getUniqueId } from "../unique-id";
 
-const InputText = (label: string, initialText: string, onChange: (data:string)=>void) => {
+const inputText = (label: string, initialText: string, onChange: (data:string)=>void) => {
     const uuid = getUniqueId()
     const rootWidget = new QWidget();
     const layout = new FlexLayout();
@@ -37,4 +37,4 @@ const InputText = (label: string, initialText: string, onChange: (data:string)=>
     return rootWidget
 }
 
-export default InputText
+export default inputText

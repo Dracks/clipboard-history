@@ -12,8 +12,10 @@ import ClipboardHistoryTray from './main/ui/tray';
 import WindowManager from './main/ui/window-manager';
 import NotifierUI from './main/ui/notifier';
 import { NodeNotificationSystem } from './main/ui/notifications';
+import envPaths from 'env-paths';
+const path = envPaths('es.jaumesingla.clipboard-manager')
 
-const getPathMock = {getPath: ()=>`${process.env.HOME}/.config/clipboard-history`}
+const getPathMock = {getPath: ()=>path.data}
 
 const bus : ClipboardEventEmitter = new EventEmitter()
 const app =  QApplication.instance()
@@ -22,6 +24,7 @@ app.setQuitOnLastWindowClosed(false)
 const configDb = new DataBase<Config>('config.json', getPathMock, initialConfig)
 const windowManager = new WindowManager()
 const configService = new ConfigService(bus, configDb, windowManager)
+configService.openEdit()
 
 new NotifierUI(bus, configService, {
     node: new NodeNotificationSystem(NodeNotifier),

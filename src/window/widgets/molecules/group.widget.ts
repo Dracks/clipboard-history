@@ -1,5 +1,5 @@
 import { AlignmentFlag, FlexLayout, NodeWidget, QLabel, QWidget } from "@nodegui/nodegui";
-import { getUniqueId } from "./unique-id";
+import { getUniqueId } from "../unique-id";
 
 
 const group = (title: string, children: NodeWidget<any>[])=>{
