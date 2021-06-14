@@ -4,7 +4,7 @@
   "main": "dist/main/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "NODE_ENV=production webpack -p",
+    "build": "NODE_ENV=production webpack --config config/webpack.js",
     "start": "webpack --config config/webpack.js && qode ./dist/index.js",
     "start:debug": "webpack --config config/webpack.js && qode --inspect ./dist/index.js",
     "start:dev": "concurrently --handle-input \"wait-on dist/index.js && nodemon\" \"webpack --watch --config config/webpack.js\"",

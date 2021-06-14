@@ -23,6 +23,7 @@ const group = (title: string, children: NodeWidget<any>[])=>{
             flex-direction: column;
             border: 1px solid;
             margin: 5px;
+            padding: 10px;
         }
 
         #label-${uuid} {

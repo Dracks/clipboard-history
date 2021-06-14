@@ -1,34 +1,36 @@
 import { QWidget, FlexLayout, QLabel, AlignmentFlag, QLineEdit } from "@nodegui/nodegui";
+import labelWx from "./atoms/label.widget";
+import { getUniqueId } from "./unique-id";
 
 const InputText = (label: string, initialText: string, onChange: (data:string)=>void) => {
+    const uuid = getUniqueId()
     const rootWidget = new QWidget();
     const layout = new FlexLayout();
-    rootWidget.setObjectName('layout');
+    rootWidget.setObjectName(`layout-${uuid}`);
     rootWidget.setLayout(layout)
-    
-    const labelWx = new QLabel()
-    labelWx.setObjectName('label')
-    labelWx.setText(label)
-    labelWx.setAlignment(AlignmentFlag.AlignRight)
-    layout.addWidget(labelWx)
+
+    const lblWx = labelWx(label, {
+        objectName: `label-${uuid}`,
+        alignment: AlignmentFlag.AlignRight
+    })
+    layout.addWidget(lblWx)
 
     const inputWx = new QLineEdit()
-    inputWx.setObjectName('input')
+    inputWx.setObjectName(`input-${uuid}`)
     inputWx.setText(initialText)
     inputWx.type
     layout.addWidget(inputWx)
     
     rootWidget.setLayout(layout)
     rootWidget.setStyleSheet(`
-    #layout {
+    #layout-${uuid} {
         flex-direction: row;
-        padding: 10px;
     }
-    #label {
+    #label-${uuid} {
         padding-right: 10px;
         flex: 1;
     }
-    #input {
+    #input-${uuid} {
         flex: 1;
     }
     `)
