@@ -47,6 +47,9 @@ module.exports = {
         ]
     },
     devtool: "source-map",
+    externals: {
+        "node-notifier": "require('node-notifier')"
+    },
 
     plugins: [new CleanWebpackPlugin()],
 };
