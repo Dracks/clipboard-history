@@ -43,7 +43,7 @@
     "jest": "^24.9.0",
     "jest-create-mock-instance": "^1.1.0",
     "jest-transform-stub": "^2.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.13.1",
     "nodemon": "^1.19.1",
     "react": "^16.9.0",
